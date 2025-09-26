@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import { Button } from "../components/ui/Button.jsx"
 import { Menu, X } from "lucide-react"
-import ecoVisionLogo from "../assets/ecovision-logo.png"
 
 const Header = ({ onAuthClick }) => {
 
@@ -13,8 +12,8 @@ const Header = ({ onAuthClick }) => {
         <div className='flex items-center justify-between h-16'>
           {/*Logo*/}
           <Link to="/" className='flex items-center space-x-3 hover:opacity-80 transitiion-opacity'>
-            <img src={ecoVisionLogo} alt="Ecovision Logo" className='h-10 w-auto' />
-            <span className='text-xl font-bold text-black bg-clip-text bg-gradient-primary'>Ecovision</span>
+            <img src = "/ecoVisionLogo.png" alt="Ecovision Logo" className='h-10 w-auto' />
+            <span className='text-xl font-bold text-black bg-clip-text '>Ecovision</span>
           </Link>
 
           {/* Desktop Navigation */}

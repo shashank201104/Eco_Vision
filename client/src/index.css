@@ -152,10 +152,10 @@
 }
 
 @layer base {
-  * {
-    @apply border; /* 1px border width */
-    border-color: hsl(var(--border)); /* use your CSS variable */
-  }
+   /* * { */
+    /* @apply border; 1px border width */
+    /* border-color: hsl(var(--border)); use your CSS variable */
+  /* } */
 
   body {
     background-color: hsl(var(--background));

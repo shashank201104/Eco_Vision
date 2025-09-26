@@ -24,7 +24,8 @@ const buttonVariants = cva(
                 hero:
                     "bg-gradient-primary text-white border-2 border-white/20 hover: border-white/40 shadow-glow hover:shadow-strong backdrop-blur-sm",
                 eco:
-                    "bg-eco-green text-white hover: bg-eco-leaf shadow-medium hover:shadow-glow",
+                    "bg-[hsl(var(--eco-green))] text-[hsl(var(--primary-foreground))] hover:bg-[hsl(var(--eco-leaf))] shadow-medium hover:shadow-glow",
+
                 earth:
                     "bg-gradient-earth text-white hover: opacity-90 shadow-medium",
                 success:
