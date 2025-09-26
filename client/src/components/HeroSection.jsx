@@ -1,3 +1,4 @@
+//Author - Pratham Khare
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Camera, Divide, Upload } from 'lucide-react'

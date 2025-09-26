@@ -1,3 +1,4 @@
+//Author - Pratham Khare
 import React from "react";
 
 const Input = React.forwardRef(({ className = "", type = "text", ...props }, ref) => {
