@@ -1,4 +1,5 @@
 # Author : SHIVANSH GUPTA
+# Detail explanation of code is in ML Notebook/notebook.ipynb if anyone want to understand stuff
 
 from ultralytics import YOLO
 import cv2
