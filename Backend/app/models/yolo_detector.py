@@ -22,7 +22,7 @@ class YOLODetector:
 
     def __init__(self, model_path: str = None, device: str = None):
         # Resolve model path: provided arg > env var > default yolov8n.pt
-        model_path = model_path or os.getenv("MODEL_PATH", "yolov8n.pt")
+        model_path = model_path or os.getenv("MODEL_PATH", "yolo12n.pt")
 
         # Pick device: prefer GPU if available
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")

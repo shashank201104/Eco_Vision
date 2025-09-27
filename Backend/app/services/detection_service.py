@@ -5,8 +5,7 @@ import base64
 import cv2
 import json
 from pathlib import Path
-
-from Backend.app.models.yolo_detector import YOLODetector
+from app.models.yolo_detector import YOLODetector
 
 
 class DetectionService:
@@ -37,12 +36,12 @@ class DetectionService:
         # Step 3: Annotate image
         annotated_img = self.detector.annotate_image(image_path, detections)
 
-        # Step 4: Convert annotated image to base64 (for JSON return)
-        _, buffer = cv2.imencode(".jpg", cv2.cvtColor(annotated_img, cv2.COLOR_RGB2BGR))
-        img_base64 = base64.b64encode(buffer).decode("utf-8")
+        # # Step 4: Convert annotated image to base64 (for JSON return)
+        # _, buffer = cv2.imencode(".jpg", cv2.cvtColor(annotated_img, cv2.COLOR_RGB2BGR))
+        # img_base64 = base64.b64encode(buffer).decode("utf-8")
 
         return {
             "detections": detections,
-            "annotated_image": img_base64,
+            "annotated_image": annotated_img,
             "total_items": len(detections)
         }
