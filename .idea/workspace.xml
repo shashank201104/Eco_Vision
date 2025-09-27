@@ -1,5 +1,257 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e6486c17-1028-442d-bbbc-ba1d1285b584" name="Changes" comment="working on api layer">
+      <change afterPath="$PROJECT_DIR$/Backend/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/app/__intit__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/app/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/mainnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Eco_Vision.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Eco_Vision.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/app/models/yolo_detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app/models/yolo_detector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/app/services/detection_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app/services/detection_service.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="LEON" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="7c6b7f11-4857-451e-aeac-57708f118766" />
+  </component>
+  <component name="GithubPullRequestsUISettings">{}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Backend/app/main.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Backend/app/models/yolo_detector.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Backend/app/services/detection_service.py" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="33CMrZSMmsSXnTRWdYkQrBxskCW" />
-  <component name="PropertiesComponent">{}</component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;LEON&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.jupyter.py.connections.configurable.JupyterServersConfigurable&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-e0ed3721d81e-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.25410.159" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e6486c17-1028-442d-bbbc-ba1d1285b584" name="Changes" comment="" />
+      <created>1758816801521</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758816801521</updated>
+    </task>
+    <task id="LOCAL-00001" summary="NEW">
+      <option name="closed" value="true" />
+      <created>1758817130777</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1758817130777</updated>
+    </task>
+    <task id="LOCAL-00002" summary="some work">
+      <option name="closed" value="true" />
+      <created>1758866923356</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1758866923356</updated>
+    </task>
+    <task id="LOCAL-00003" summary="loaded the nano model">
+      <option name="closed" value="true" />
+      <created>1758868349651</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1758868349651</updated>
+    </task>
+    <task id="LOCAL-00004" summary="loaded the nano model">
+      <option name="closed" value="true" />
+      <created>1758868501826</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1758868501826</updated>
+    </task>
+    <task id="LOCAL-00005" summary="loaded the nano model">
+      <option name="closed" value="true" />
+      <created>1758900503024</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1758900503024</updated>
+    </task>
+    <task id="LOCAL-00006" summary="upload test image">
+      <option name="closed" value="true" />
+      <created>1758900662526</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1758900662526</updated>
+    </task>
+    <task id="LOCAL-00007" summary="uploading our yolo 12 nano modal">
+      <option name="closed" value="true" />
+      <created>1758900707179</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1758900707179</updated>
+    </task>
+    <task id="LOCAL-00008" summary="uploading our yolo 12 nano modal">
+      <option name="closed" value="true" />
+      <created>1758905855246</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1758905855246</updated>
+    </task>
+    <task id="LOCAL-00009" summary="uploading our yolo 12 nano modal">
+      <option name="closed" value="true" />
+      <created>1758905907832</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1758905907832</updated>
+    </task>
+    <task id="LOCAL-00010" summary="write the annotate funtion">
+      <option name="closed" value="true" />
+      <created>1758905937542</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1758905937542</updated>
+    </task>
+    <task id="LOCAL-00011" summary="now write the whole script of yolo detection and annotation">
+      <option name="closed" value="true" />
+      <created>1758906001827</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1758906001827</updated>
+    </task>
+    <task id="LOCAL-00012" summary="now write the whole script of yolo detection and annotation">
+      <option name="closed" value="true" />
+      <created>1758906262317</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1758906262317</updated>
+    </task>
+    <task id="LOCAL-00013" summary="now write the whole script of yolo detection and annotation">
+      <option name="closed" value="true" />
+      <created>1758966433379</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1758966433379</updated>
+    </task>
+    <task id="LOCAL-00014" summary="marker file for models folder">
+      <option name="closed" value="true" />
+      <created>1758966946915</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1758966946915</updated>
+    </task>
+    <task id="LOCAL-00015" summary="done with service layer">
+      <option name="closed" value="true" />
+      <created>1758973599009</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1758973599009</updated>
+    </task>
+    <task id="LOCAL-00016" summary="done with service layer">
+      <option name="closed" value="true" />
+      <created>1758973800639</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1758973800639</updated>
+    </task>
+    <task id="LOCAL-00017" summary="done with service layer">
+      <option name="closed" value="true" />
+      <created>1758976208112</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1758976208112</updated>
+    </task>
+    <task id="LOCAL-00018" summary="working on api layer">
+      <option name="closed" value="true" />
+      <created>1758988392777</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1758988392777</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="NEW" />
+    <MESSAGE value="some work" />
+    <MESSAGE value="loaded the nano model" />
+    <MESSAGE value="upload test image" />
+    <MESSAGE value="annotate funtion" />
+    <MESSAGE value="uploading our yolo 12 nano modal" />
+    <MESSAGE value="write the annotate funtion" />
+    <MESSAGE value="now write the whole script of yolo detection and annotation" />
+    <MESSAGE value="marker file for models folder" />
+    <MESSAGE value="done with service layer" />
+    <MESSAGE value="working on api layer" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on api layer" />
+  </component>
 </project>
