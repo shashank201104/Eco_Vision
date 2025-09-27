@@ -43,5 +43,6 @@ class DetectionService:
 
         return {
             "detections": detections,
-            "annotated_image": img_base64
+            "annotated_image": img_base64,
+            "total_items": len(detections)
         }
