@@ -4,8 +4,6 @@
 import base64
 import cv2
 import json
-import os
-from typing import Dict
 from pathlib import Path
 
 from Backend.app.models.yolo_detector import YOLODetector
