@@ -31,7 +31,7 @@ class YOLODetector:
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
 
         # Load pretrained YOLO model onto the chosen device
-        self.model = YOLO(model_path)
+        self.model = YOLO(model_path).to(self.device)
         print(f"[YOLODetector] Loaded model: {model_path} on {self.device}")
 
         # Map COCO dataset IDs -> names for items consider reusable
@@ -72,7 +72,6 @@ class YOLODetector:
             image_path,
             conf=conf,
             imgsz=imgsz,
-            device=self.device,
             classes=classes
         )
 
