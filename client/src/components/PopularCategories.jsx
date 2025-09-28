@@ -76,24 +76,22 @@ const PopularCategories = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
               onClick={() => handleCategoryClick(category.id)}
             >
-              <CardContent className="p-0">
-                <div className="relative">
+              <CardContent className="p-0 relative h-64">
+  
                   <img 
                     src={category.image} 
                     alt={category.name}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"/>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                    <h3 className="text-lg font-semibold mb-1">{category.name}</h3>
-                    <p className="text-sm text-white/80 mb-2">{category.description}</p>
+                    <h3 className="text-lg font-semibold mb-1 drop-shadow-lg">{category.name}</h3>
+                    <p className="text-sm text-white/90 mb-2 drop-shadow-md">{category.description}</p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs bg-eco-green px-2 py-1 rounded-full">
                         {category.carbonSaving} saved
                       </span>
                     </div>
                   </div>
-                </div>
               </CardContent>
             </Card>
           ))}
