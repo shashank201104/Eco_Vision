@@ -31,7 +31,7 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
       <div className='relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto'>
         <div className='animate-fade-in'>
           <h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight'>Transform Your
-            <span className='block bg-gradient-to-r from-green-300 to-blue-300 bg-clip-text text-transparent'>Recycling Journey</span>
+            <span className='block text-white-500 bg-clip-text'>Recycling Journey</span>
           </h1>
 
           <p className='text-xl sm:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed'>

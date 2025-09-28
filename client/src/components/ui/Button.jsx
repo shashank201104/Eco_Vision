@@ -23,7 +23,7 @@ const buttonVariants = cva(
                 link:
                     "text-primary underline-offset-4 hover:underline",
                 hero:
-                    "bg-gradient-primary text-white border-2 border-white/20 hover: border-white/40 shadow-glow hover:shadow-strong backdrop-blur-sm",
+                    "bg-white text-green-600 border-2 border-white/20 hover: border-white/40 shadow-glow hover:shadow-strong backdrop-blur-sm",
                 eco:
                     "bg-[hsl(var(--eco-green))] text-[hsl(var(--primary-foreground))] hover:bg-[hsl(var(--eco-leaf))] shadow-medium hover:shadow-glow",
 
