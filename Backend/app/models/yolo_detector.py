@@ -34,7 +34,7 @@ class YOLODetector:
         self.model = YOLO(model_path)
         print(f"[YOLODetector] Loaded model: {model_path} on {self.device}")
 
-        # Map COCO dataset IDs → names for items we consider reusable
+        # Map COCO dataset IDs -> names for items consider reusable
         self.reusable_classes = {
             39: 'bottle',
             41: 'cup',
