@@ -7,11 +7,14 @@ import numpy as np
 from typing import List, Dict
 import torch
 import os
+from dotenv import load_dotenv
 
+# Load variables from .env file
+load_dotenv()
 
 class YOLODetector:
     """
-    Wrapper for YOLOv8 model to detect reusable/recyclable items.
+    Wrapper for YOLOv12 model to detect reusable/recyclable items.
 
     Features:
     - Loads model onto CPU/GPU automatically
@@ -21,8 +24,8 @@ class YOLODetector:
     """
 
     def __init__(self, model_path: str = None, device: str = None):
-        # Resolve model path: provided arg > env var > default yolov8n.pt
-        model_path = model_path or os.getenv("MODEL_PATH", "yolo12n.pt")
+        # Resolve model path: provided arg > env var > default yolo12n.pt
+        model_path = model_path or os.getenv("MODEL_PATH","yolo12n.pt")
 
         # Pick device: prefer GPU if available
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
