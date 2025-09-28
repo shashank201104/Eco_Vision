@@ -1,0 +1,53 @@
+
+.card {
+  padding: 2rem;
+  border-color: hsl(var(--border));
+  min-width: 25rem;
+  max-width: 25rem;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+
+  position: relative;
+  bottom: 0;
+  box-shadow: 0 0 0 transparent;
+
+  transition: bottom 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  position: relative;
+  bottom: 10px;
+  box-shadow: 0 5px 15px -5px hsl(var(--primary));
+}
+
+.card {
+}
+
+.avatar {
+  border-radius: 9999px;
+  width: 5rem;
+  height: 5rem;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.role {
+  color: hsl(var(--primary));
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.bio {
+  color: var(--muted-foreground);
+  line-height: 1.625;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-bottom: 1rem;
+}
