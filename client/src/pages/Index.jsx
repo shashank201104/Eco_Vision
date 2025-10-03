@@ -37,7 +37,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header onAuthClick={handleAuthClick} />
+      {/* <Header onAuthClick={handleAuthClick} /> */}
 
       <main>
         <HeroSection onUploadClick={handleUploadClick} onCameraClick={handleCameraClick} />
@@ -55,7 +55,7 @@ const Index = () => {
         </div>
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
