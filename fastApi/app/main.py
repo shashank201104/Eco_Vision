@@ -58,7 +58,11 @@ async def detect(file: UploadFile = File(...), confidence: float = Form(0.5)):
 
         # Validate uploaded file
         if not file.content_type.startswith("image/"):
-            raise HTTPException(status_code=400, detail="Uploaded file must be an image")
+          raise HTTPException(
+        status_code=400, 
+        detail=f"Uploaded file must be an image. Provided type: {file.content_type}"
+    )
+
 
         #  Save uploaded file temporarily using tempfile
         temp_dir = Path(tempfile.gettempdir())
