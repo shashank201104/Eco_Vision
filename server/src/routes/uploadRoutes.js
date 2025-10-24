@@ -33,6 +33,7 @@ router.post("/", upload.single("file"), async (req, res) => {
       headers: form.getHeaders(),
     });
 
+    console.log("response ", response);
     // Get class name from detection
     const detectedClass = response.data?.detections?.[0]?.class_name;
 
@@ -50,7 +51,7 @@ router.post("/", upload.single("file"), async (req, res) => {
         AnnotatedImage: response.data.annotated_image,
     });
   } catch (err) {
-    console.error(err);
+    console.error(err );
     res.status(500).json({ error: err.message });
   }
 });
