@@ -12,7 +12,7 @@ const FeedbackForm = () => {
 
   const [name, setName] = useState('');
   const [feedback, setFeedback] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e) => {
@@ -29,12 +29,23 @@ const FeedbackForm = () => {
 
     setIsSubmitting(true);
 
-    //Simulate Api Call
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // API call to backend
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, feedback }),
+      });
 
-      //send to backend
-      console.log('Feedback Submitted', { name, feedback });
+      if (!response.ok) {
+        throw new Error('Failed to submit feedback');
+      }
+
+      // Optionally get response data
+      const data = await response.json();
+      console.log('Feedback saved:', data);
 
       toast({
         title: "Thank you for your feedback!",
@@ -42,23 +53,20 @@ const FeedbackForm = () => {
         variant: "default",
       });
 
-      //Reset Form
+      // Reset form
       setName('');
       setFeedback('');
-    }
-
-    catch (error) {
+    } catch (error) {
+      console.error(error);
       toast({
         title: "Submission failed",
         description: "Please try again later.",
         variant: "destructive",
       });
-    }
-
-    finally {
+    } finally {
       setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
@@ -82,17 +90,36 @@ const FeedbackForm = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-foreground font-medium">Your Name</Label>
-                <Input id="name" type="text" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} className="border-border focus:border-primary transition-colors" required />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="border-border focus:border-primary transition-colors"
+                  required
+                />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="feedback" className="text-foreground font-medium">
-                  Your Feedback
-                </Label>
-                <Textarea id="feedback" placeholder="Tell us about your experience with EcoVision..." value={feedback} onChange={(e) => setFeedback(e.target.value)} className="border-border focus:border-primary transition-colors min-h-[120px] resize-none" required />
+                <Label htmlFor="feedback" className="text-foreground font-medium">Your Feedback</Label>
+                <Textarea
+                  id="feedback"
+                  placeholder="Tell us about your experience with EcoVision..."
+                  value={feedback}
+                  onChange={(e) => setFeedback(e.target.value)}
+                  className="border-border focus:border-primary transition-colors min-h-[120px] resize-none"
+                  required
+                />
               </div>
 
-              <Button type="submit" disabled={isSubmitting} className="w-full" variant="eco" size="lg">
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full"
+                variant="eco"
+                size="lg"
+              >
                 {isSubmitting ? (
                   <div className="flex items-center space-x-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -110,7 +137,7 @@ const FeedbackForm = () => {
         </Card>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default FeedbackForm
+export default FeedbackForm;

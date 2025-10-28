@@ -6,6 +6,7 @@ import PopularCategories from '../components/PopularCategories.jsx'
 import UserTestimonials from '../components/UserTestimonials.jsx'
 import Footer from '../components/Footer.jsx'
 import FeedbackForm from '../components/FeedbackForm.jsx'
+import { ToastContainer } from '../hooks/ToastContainer.jsx'
 
 const Index = () => {
 
@@ -52,6 +53,7 @@ const Index = () => {
 
         <div id="feedback">
           <FeedbackForm />
+          <ToastContainer/>
         </div>
       </main>
 
