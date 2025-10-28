@@ -1,0 +1,114 @@
+.backLink {
+  padding-top: 10vh;
+}
+
+.hero,
+.backLink {
+  color: hsl(var(--primary-foreground));
+  background-color: hsl(var(--primary));
+}
+
+.backLink {
+  padding-left: 10rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.heading {
+  padding-top: 1.5rem;
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 3rem;
+}
+
+.subheading {
+  font-size: 1.2rem;
+  margin: auto;
+  text-align: center;
+  width: 52vw;
+  padding-bottom: 8vh;
+  font-weight: 400;
+  line-height: 2rem;
+  padding-top: 1.5rem;
+}
+
+.missionSection {
+  background-color: white;
+}
+.missionHeading {
+  padding-top: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 3rem;
+}
+
+.missionText {
+  font-size: 18px;
+  margin: auto;
+  text-align: center;
+  width: 57vw;
+  padding-bottom: 8vh;
+  font-weight: 400;
+  line-height: 1.8rem;
+  padding-top: 1.5rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.TeamMembers {
+  background-color: hsl(var(--muted) / 0.5);
+}
+
+.grid {
+  padding: 4rem;
+  gap: 2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.valuesSection h2 {
+  color: hsl(var(--foreground));
+  font-weight: 700;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.card {
+  max-width: 25vw;
+}
+.card h3 {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.card p {
+  text-align: center;
+  font-size: 1rem;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 2.5rem;
+}
+
+.card img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  border: 0px;
+  margin: auto;
+
+}
