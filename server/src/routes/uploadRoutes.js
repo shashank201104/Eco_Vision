@@ -11,7 +11,7 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // limit = 5 MB
 });
 
-// POST /upload
+// upload route for sending image from frontend to FastApi backend for item recognition
 router.post("/", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {

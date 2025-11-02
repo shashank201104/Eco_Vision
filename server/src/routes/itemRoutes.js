@@ -1,9 +1,10 @@
+//Author: Shashank
 import express from "express";
 import {getItemByName} from "../controllers/itemController.js";
 
 const router = express.Router();
 
-//get a particular item
+//Route to get a particular item from database
 router.get("/:name", getItemByName);
 
 
