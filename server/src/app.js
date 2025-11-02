@@ -1,3 +1,5 @@
+//Author: Shashank
+
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
@@ -11,10 +13,14 @@ connectDB();
 const app = express();
 const PORT= process.env.PORT || 5000;
 
+//using cors for cross origin access and json for api's data parsing 
 app.use(cors());
 app.use(express.json());
 
+//route to fetch recylable items's data from database.
 app.use("/items",ItemRoutes);
+
+//route for upload user's image for item recognition 
 app.use("/upload",UploadRoutes);
 
 app.get("/",(req,res)=>{

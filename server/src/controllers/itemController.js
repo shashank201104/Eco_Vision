@@ -1,9 +1,13 @@
+//Author: Shashank
+
 import Item from "../models/items.js";
 
 //function to get a particular recyleable item data form database
 export const getItemByName= async (req,res)=>{
     try {
     const { name } = req.params;
+
+    // using mongodb query to find required item's data
     const item = await Item.findOne({ name: new RegExp(`^${name}$`, "i") }); 
 
     if (!item) {
