@@ -1,6 +1,6 @@
 //Author - Pratham Khare
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Camera, Divide, Upload } from "lucide-react";
 import { Button } from "./ui/Button";
 import heroBg1 from "../assets/hero-bg-1.jpg";
@@ -41,11 +41,17 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
   const [uploading, setUploading] = useState(false);
   const [popupImage, setPopupImage] = useState(null);
 
-  const handleShowPopup = () => {
-    console.log(file);
-    // const annotatedBase64 = file.AnnotatedImage; // replace with your AnnotatedImage from server
-    // setPopupImage(annotatedBase64);
+  const fileInputRef = useRef(null);
+
+  const handleShowPopup = (data) => {
+    console.log("Server response:", data);
+    if (data && data.AnnotatedImage) {
+      setPopupImage(data.AnnotatedImage);
+    } else {
+      console.warn("No AnnotatedImage found in response");
+    }
   };
+
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected) {
@@ -67,12 +73,13 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
       });
       console.log("Upload success:", res.data);
       alert("File uploaded successfully!");
-      handleShowPopup();
+      handleShowPopup(res.data);
     } catch (err) {
       console.error("Upload error:", err);
       alert("Upload failed!");
     } finally {
       setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
 
@@ -123,6 +130,7 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
               style={{ animationDelay: "0.2s" }}
             >
               <input
+                ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
@@ -155,18 +163,13 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
             {popupImage && (
               <ImagePopup
                 imageBase64={popupImage}
-                onClose={() => setPopupImage(null)}
+                onClose={() => {
+                  setPopupImage(null);
+                }}
               />
             )}
           </div>
         </div>
-
-        {/* Scroll Indicator
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse"></div>
-          </div> */}
-        {/* </div> */}
       </div>
     </section>
   );
