@@ -1,11 +1,12 @@
-import React from "react";
-import { useToast } from "../hooks/use-toast.js";
-import Header from "../components/Header.jsx";
-import HeroSection from "../components/HeroSection.jsx";
-import PopularCategories from "../components/PopularCategories.jsx";
-import UserTestimonials from "../components/UserTestimonials.jsx";
-import Footer from "../components/Footer.jsx";
-import FeedbackForm from "../components/FeedbackForm.jsx";
+import React from 'react'
+import { useToast } from "../hooks/use-toast.js"
+import Header from "../components/Header.jsx"
+import HeroSection from '../components/HeroSection.jsx'
+import PopularCategories from '../components/PopularCategories.jsx'
+import UserTestimonials from '../components/UserTestimonials.jsx'
+import Footer from '../components/Footer.jsx'
+import FeedbackForm from '../components/FeedbackForm.jsx'
+import { ToastContainer } from '../hooks/ToastContainer.jsx'
 
 const Index = () => {
   const { toast } = useToast();
@@ -57,6 +58,7 @@ const Index = () => {
 
         <div id="feedback">
           <FeedbackForm />
+          <ToastContainer/>
         </div>
       </main>
 

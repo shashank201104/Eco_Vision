@@ -43,7 +43,7 @@ const Footer = () => {
               <img
                 src="/ecoVisionLogo.png"
                 alt="EcoVision Logo"
-                className="h-10 w-auto brightness-0 invert"
+                className="h-10 w-auto"
               />
               <span className="text-xl font-bold">EcoVision</span>
             </div>
@@ -76,7 +76,7 @@ const Footer = () => {
                   href="#categories"
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 >
-                  Recycling Categories
+                  Popular Recycling Categories
                 </a>
               </li>
               <li>
