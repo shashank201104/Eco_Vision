@@ -1,35 +1,35 @@
 //Author - Pratham Khare
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Linkedin, Mail, Heart } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Linkedin, Mail, Heart } from "lucide-react";
 // import ecoVisionLogo from '../assets/ecoVisionLogo.png';
 
 const Footer = () => {
   const teamMembers = [
     {
-      name: 'Pratham Khare',
-      role: 'Frontend and Backend',
-      linkedin: 'https://linkedin.com/in/pratham',
+      name: "Pratham Khare",
+      role: "Frontend and Backend",
+      linkedin: "https://linkedin.com/in/pratham",
     },
     {
-      name: 'Manish Aggarwal',
-      role: 'Frontend and Model Training',
-      linkedin: 'https://linkedin.com/in/manish',
+      name: "Manish Aggarwal",
+      role: "Frontend and Model Training",
+      linkedin: "https://linkedin.com/in/manish",
     },
     {
-      name: 'Shashank',
-      role: 'Backend',
-      linkedin: 'https://linkedin.com/in/shashank',
+      name: "Shashank",
+      role: "Backend",
+      linkedin: "https://linkedin.com/in/shashank",
     },
     {
-      name: 'Shivansh Gupta',
-      role: 'Ai Developer',
-      linkedin: 'https://linkedin.com/in/shivansh',
+      name: "Shivansh Gupta",
+      role: "Ai Developer",
+      linkedin: "https://linkedin.com/in/shivansh",
     },
     {
-      name: 'Ansh Mishra',
-      role: 'Ui Designer',
-      linkedin: 'https://linkedin.com/in/ansh',
+      name: "Ansh Mishra",
+      role: "Ui Designer",
+      linkedin: "https://linkedin.com/in/ansh",
     },
   ];
 
@@ -41,15 +41,16 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <img
-                src= "/ecoVisionLogo.png"
+                src="/ecoVisionLogo.png"
                 alt="EcoVision Logo"
                 className="h-10 w-auto"
               />
               <span className="text-xl font-bold">EcoVision</span>
             </div>
             <p className="text-primary-foreground/80 leading-relaxed">
-              Empowering individuals and communities to make sustainable choices through
-              AI-powered recycling solutions and environmental awareness.
+              Empowering individuals and communities to make sustainable choices
+              through AI-powered recycling solutions and environmental
+              awareness.
             </p>
             <div className="flex items-center space-x-2 text-sm text-primary-foreground/70">
               <span>Made with</span>
