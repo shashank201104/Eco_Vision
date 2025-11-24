@@ -27,7 +27,7 @@ router.post("/", upload.single("file"), async (req, res) => {
     form.append("confidence", "0.5");
 
     // Send request to FastAPI
-    const fastApiUrl = "http://localhost:8000/detect";
+    const fastApiUrl = process.env.FASTAPI_URL || "http://localhost:8000/detect";
     
     const response = await axios.post(fastApiUrl, form, {
       headers: form.getHeaders(),
@@ -43,7 +43,7 @@ router.post("/", upload.single("file"), async (req, res) => {
 
     // Fetch item details from your Express backend
     const itemResponse = await axios.get(
-      `http://localhost:5000/items/${detectedClass}`
+      `${process.env.BACKEND_URL || "http://localhost:5000"}/items/${detectedClass}`
     );
 
     res.json({
