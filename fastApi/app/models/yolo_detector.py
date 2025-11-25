@@ -37,6 +37,9 @@ class YOLODetector:
         # Map COCO dataset IDs -> names for items consider reusable
         self.reusable_classes = {
             39: 'bottle',
+            40: 'wine glass',
+            48: 'sandwich',
+            50: 'broccoli',
             41: 'cup',
             42: 'fork',
             43: 'knife',
@@ -44,10 +47,23 @@ class YOLODetector:
             45: 'bowl',
             46: 'banana',
             47: 'apple',
+            52: 'hot dog',
+            53: 'pizza',
+            54: 'donut',
+            55: 'cake',
             51: 'orange',
             67: 'cell phone',
+            56: 'chair',
+            57: 'couch',
+            60: 'dining table',
+            74: 'clock',
+            75: 'vase',
+            64: 'mouse',
+            65: 'remote',
+            62: 'tv',
             73: 'laptop',
             76: 'keyboard',
+            79: 'toothbrush',
             84: 'book',
         }
 
