@@ -8,23 +8,69 @@ import heroBg2 from "../assets/hero-bg-2.jpg";
 import heroBg3 from "../assets/hero-bg-3.jpg";
 import axios from "axios";
 
-const ImagePopup = ({ imageBase64, onClose }) => {
+const ImagePopup = ({ imageBase64, onClose, popupData = [] }) => {
   if (!imageBase64) return null;
 
   return (
     <div
       className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-      onClick={onClose} // close when clicking outside
+      onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg overflow-hidden shadow-lg max-w-lg w-full p-4"
-        onClick={(e) => e.stopPropagation()} // prevent closing when clicking on modal
+        className="bg-white rounded-lg shadow-lg max-w-lg w-full p-4 max-h-[80vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
       >
+        {/* IMAGE */}
         <img
           src={`data:image/jpeg;base64,${imageBase64}`}
           alt="Annotated"
           className="w-full h-auto rounded-md"
         />
+
+        {/* SCROLLABLE CONTENT */}
+        <div className="mt-4 overflow-y-auto custom-scrollbar flex-1 pr-1">
+          {popupData.length > 0 && (
+            <div className="p-3 bg-gray-100 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">
+                Detected Item Details
+              </h3>
+
+              <div className="space-y-4">
+                {popupData.map((item, index) => (
+                  <div
+                    key={index}
+                    className="p-3 bg-white rounded border shadow-sm space-y-1"
+                  >
+                    <p className="text-lg font-bold text-gray-900">
+                      {item.name}
+                    </p>
+
+                    <p className="text-sm text-gray-700">
+                      <span className="font-semibold">Carbon Footprint:</span>{" "}
+                      {item.carbon_Footprint ?? "N/A"} kg CO₂e
+                    </p>
+
+                    <p className="text-sm text-gray-700">
+                      <span className="font-semibold">Shelf Life:</span>{" "}
+                      {item.shelf_Life ?? "N/A"}
+                    </p>
+
+                    <p className="text-sm text-gray-700">
+                      <span className="font-semibold">Recycle Tips:</span>{" "}
+                      {item.recycle_Tips ?? "N/A"}
+                    </p>
+
+                    {/* <p className="text-xs text-gray-500">
+                      ID: {item._id}
+                    </p> */}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* CLOSE BUTTON */}
         <button
           className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
           onClick={onClose}
@@ -40,6 +86,7 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [popupImage, setPopupImage] = useState(null);
+  const [popupData, setPopupData] = useState(null);
 
   const fileInputRef = useRef(null);
 
@@ -47,6 +94,7 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
     console.log("Server response:", data);
     if (data && data.AnnotatedImage) {
       setPopupImage(data.AnnotatedImage);
+      setPopupData(data.itemData);
     } else {
       console.warn("No AnnotatedImage found in response");
     }
@@ -72,7 +120,7 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log("Upload success:", res.data);
-      alert("File uploaded successfully!");
+      // alert("File uploaded successfully!");
       handleShowPopup(res.data);
     } catch (err) {
       console.error("Upload error:", err);
@@ -163,6 +211,7 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
             {popupImage && (
               <ImagePopup
                 imageBase64={popupImage}
+                popupData={popupData}
                 onClose={() => {
                   setPopupImage(null);
                 }}
