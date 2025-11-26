@@ -1,127 +1,18 @@
-import { useEffect, useState } from "react";
-// import LoginWIthGoogleButton from '../../components/AuthPage/LoginWIthGoogleButton';
 import { Button } from "../../components/ui/Button";
-import { useAuthStore } from "../../store/useAuthStore";
-import { useNavigate } from "react-router-dom";
+import { useAuthPage } from "./useAuthPage";
 
 export default function AuthPage() {
-  const [activeTab, setActiveTab] = useState("login");
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-    confirmPassword: "",
-  });
-  const [errors, setErrors] = useState({});
-  // const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState({ type: "", text: "" });
-
-  const { signup, login, authUser, isSigningUp, isLoggingIn } = useAuthStore();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (authUser) {
-      navigate("/"); // redirect to home
-    }
-  }, [authUser]);
-
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = "Invalid email format";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-
-    if (activeTab === "signup") {
-      if (!formData.firstName) {
-        newErrors.firstName = "First Name is required";
-      }
-      if (!formData.lastName) {
-        newErrors.lastName = "Last Name is required";
-      }
-      if (!formData.confirmPassword) {
-        newErrors.confirmPassword = "Please confirm your password";
-      } else if (formData.password !== formData.confirmPassword) {
-        newErrors.confirmPassword = "Passwords do not match";
-      }
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage({ type: "", text: "" });
-
-    if (!validateForm()) return;
-
-    if (activeTab === "login") {
-      // login payload
-      const payload = {
-        email: formData.email,
-        password: formData.password,
-      };
-
-      await login(payload); // call Zustand action
-    } else {
-      // signup payload
-      const payload = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-      };
-
-      await signup(payload); // call Zustand action
-      // setMessage({ type: "success", text: "Signup successful!" });
-    }
-    if (authUser)
-      // reset form
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-  };
-
-  const handleGoogleLogin = () => {
-    setMessage({
-      type: "info",
-      text: "Google login would redirect to OAuth flow...",
-    });
-    // In production: window.location.href = 'YOUR_GOOGLE_OAUTH_URL';
-  };
-
-  const switchTab = (tab) => {
-    setActiveTab(tab);
-    setFormData({ email: "", password: "", name: "", confirmPassword: "" });
-    setErrors({});
-    setMessage({ type: "", text: "" });
-  };
+ const {
+    activeTab,
+    formData,
+    errors,
+    message,
+    isSigningUp,
+    isLoggingIn,
+    handleChange,
+    handleSubmit,
+    switchTab,
+  } = useAuthPage();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-4 mt-8">
@@ -292,27 +183,6 @@ export default function AuthPage() {
                   : "Sign Up"}
               </Button>
             </div>
-
-            {/* <div className="mt-6">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-green-200"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
-                </div>
-              </div>
-
-              <LoginWIthGoogleButton handleGoogleLogin={handleGoogleLogin}/>
-            </div> */}
-
-            {activeTab === "login" && (
-              <div className="mt-4 text-center">
-                <button className="cursor-pointer text-sm text-green-600 hover:text-green-700 font-medium">
-                  Forgot password?
-                </button>
-              </div>
-            )}
           </div>
         </div>
 
