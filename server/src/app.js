@@ -17,7 +17,7 @@ const PORT= process.env.PORT || 5000;
 
 //using cors for cross origin access and json for api's data parsing 
 app.use(cors(
-    { origin: 'http://localhost:5173',
+    { origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true }
 
 ));
@@ -39,5 +39,5 @@ app.get("/",(req,res)=>{
 })
 
 app.listen(PORT,()=>{
-console.log(`server running at http://localhost:${PORT}`)
+console.log(`server running`)
 })
