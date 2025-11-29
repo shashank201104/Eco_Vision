@@ -68,7 +68,7 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
     formData.append("file", fileToUpload);
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"}/upload`, formData, {
+      const res = await axios.post(`${import.meta.env.MODE==="development"?"http://localhost:5000":import.meta.env.VITE_BACKEND_URL}/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log("Upload success:", res.data);

@@ -27,23 +27,27 @@ router.post("/", upload.single("file"), async (req, res) => {
     form.append("confidence", "0.5");
 
     // Send request to FastAPI
-    const fastApiUrl = process.env.FASTAPI_URL || "http://localhost:8000/detect";
+    const fastApiUrl =process.env.NODE_ENV==="production"? process.env.FASTAPI_URL : "http://localhost:8000/detect/";
     
-    const response = await axios.post(fastApiUrl, form, {
-      headers: form.getHeaders(),
-    });
+      const response = await axios.post(fastApiUrl, form, {
+        headers: form.getHeaders(),    
+      });
+      
 
-    console.log("response ", response);
     // Get class name from detection
     const detectedClass = response.data?.detections?.[0]?.class_name;
 
     if (!detectedClass) {
-      return res.status(404).json({ error: "No object detected" });
+      return res.status(200).json({
+    message: "No object detected",
+    itemData: null,
+    AnnotatedImage: response.data.annotated_image, // still show image if available
+  });
     }
-
     // Fetch item details from your Express backend
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
     const itemResponse = await axios.get(
-      `${process.env.BACKEND_URL || "http://localhost:5000"}/items/${detectedClass}`
+      `${baseUrl}/items/${detectedClass}`
     );
 
     res.json({
@@ -51,7 +55,7 @@ router.post("/", upload.single("file"), async (req, res) => {
         AnnotatedImage: response.data.annotated_image,
     });
   } catch (err) {
-    console.error(err );
+    console.log("Error in upload route:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
