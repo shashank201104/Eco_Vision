@@ -1,6 +1,5 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Drives from "./pages/Drives.jsx";
+import Drives from "./pages/Drives.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import About from "./pages/About/About.jsx";
 // import CategoryDetail from "./pages/CategoryDetail.jsx";
@@ -19,11 +18,11 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Index />} />
           <Route path="about" element={<About />} />
-           <Route path="auth" element={<AuthPage />} />
+          <Route path="auth" element={<AuthPage />} />
         </Route>
-        {/* <Route path="/category/:categoryId" element={<CategoryDetail />} />
+        {/* <Route path="/category/:categoryId" element={<CategoryDetail />} /> */}
         <Route path="/drives" element={<Drives />} />
-        <Route path="/drive/:driveId" element={<DriveDetail />} /> */}
+        {/* <Route path="/drive/:driveId" element={<DriveDetail />} /> */}
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </Router>
