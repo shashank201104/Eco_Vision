@@ -20,10 +20,10 @@ const App = () => {
           <Route path="about" element={<About />} />
           <Route path="auth" element={<AuthPage />} />
         </Route>
-        {/* <Route path="/category/:categoryId" element={<CategoryDetail />} /> */}
+        <Route path="/category/:categoryId" element={<CategoryDetail />} />
         <Route path="/drives" element={<Drives />} />
         {/* <Route path="/drive/:driveId" element={<DriveDetail />} /> */}
-        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
