@@ -47,7 +47,7 @@ async def health():
 # Detection endpoint
 # -----------------------------
 @app.post("/detect")
-async def detect(file: UploadFile = File(...), confidence: float = Form(0.5)):
+async def detect(file: UploadFile = File(...), confidence: float = Form(0.3)):
     """
         Upload an image, run detection and return JSON
         response with detections and annotated image.
