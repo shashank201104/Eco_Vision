@@ -10,18 +10,19 @@ import os
 from dotenv import load_dotenv
 
 # Load variables from .env file
-load_dotenv()
+load_dotenv("app/.env")
 
 class YOLODetector:
     """
-    Wrapper for YOLOv12 model to detect reusable/recyclable items.
+    Wrapper for a custom-trained YOLO model to detect recyclable or reusable items.
 
     Features:
-    - Loads model onto CPU/GPU automatically
-    - Filters detections to only include selected COCO classes
-    - Returns clean, JSON-serializable results
-    - Annotates images with bounding boxes + labels
+    - Automatically loads the trained model onto CPU or GPU
+    - Uses the custom dataset’s class names instead of COCO labels
+    - Returns clean, JSON-serializable detection results
+    - Annotates images with bounding boxes and class labels
     """
+
 
     def __init__(self, model_path: str = None, device: str = None):
         # Resolve model path: provided arg > env var > default yolo12n.pt
@@ -30,44 +31,45 @@ class YOLODetector:
         # Pick device: prefer GPU if available
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
 
-        # Load pretrained YOLO model onto the chosen device
+        # Load the custom-trained YOLO model onto the selected device
         self.model = YOLO(model_path).to(self.device)
         print(f"[YOLODetector] Loaded model: {model_path} on {self.device}")
 
-        # Map COCO dataset IDs -> names for items consider reusable
+        # Map custom model class IDs → class names (from our own dataset)
         self.reusable_classes = {
-            39: 'bottle',
-            40: 'wine glass',
-            48: 'sandwich',
-            50: 'broccoli',
-            41: 'cup',
-            42: 'fork',
-            43: 'knife',
-            44: 'spoon',
-            45: 'bowl',
-            46: 'banana',
-            47: 'apple',
-            52: 'hot dog',
-            53: 'pizza',
-            54: 'donut',
-            55: 'cake',
-            51: 'orange',
-            67: 'cell phone',
-            56: 'chair',
-            57: 'couch',
-            60: 'dining table',
-            74: 'clock',
-            75: 'vase',
-            64: 'mouse',
-            65: 'remote',
-            62: 'tv',
-            73: 'laptop',
-            76: 'keyboard',
-            79: 'toothbrush',
-            84: 'book',
+            0: "Banana",
+            1: "Apple",
+            2: "Orange",
+            3: "Tomato",
+            4: "Carrot",
+            5: "Cucumber",
+            6: "Potato",
+            7: "Bread",
+            8: "Cake",
+            9: "Pizza",
+            10: "Hamburger",
+            11: "Chicken",
+            12: "Fish",
+            13: "Food",
+            14: "Tin can",
+            15: "Bottle",
+            16: "Facial tissue holder",
+            17: "Toilet paper",
+            18: "Paper towel",
+            19: "Milk",
+            20: "Snack",
+            21: "Plastic bag",
+            22: "Candy",
+            23: "Light bulb",
+            24: "Toothbrush",
+            25: "Soap dispenser",
+            26: "Drinking straw",
+            27: "Fast food",
+            28: "Pasta",
+            29: "Pastry"
         }
 
-    def detect_objects(self, image_path: str, conf: float = 0.5, imgsz: int = 640) -> List[Dict]:
+    def detect_objects(self, image_path: str, conf: float = 0.3, imgsz: int = 640) -> List[Dict]:
         """
         Run YOLO inference and return filtered detections.
         Args:
