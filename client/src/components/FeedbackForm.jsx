@@ -7,15 +7,14 @@ import { Textarea } from './ui/TextArea.jsx';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card.jsx';
 import { Label } from './ui/Label.jsx';
 import { useToast } from '../hooks/use-toast.js';
-import { Send } from 'lucide-react';
+import { Send, Star } from 'lucide-react';
 
 const FeedbackForm = () => {
 
   // Form state: name and feedback text input
   const [name, setName] = useState('');
   const [feedback, setFeedback] = useState('');
-
-  // Loading state to disable button and show spinner during submission
+  const [rating, setRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Toast function to show success / error notifications
@@ -25,10 +24,10 @@ const FeedbackForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name.trim() || !feedback.trim()) {
+    if (!name.trim() || !feedback.trim() || rating === 0) {
       toast({
-        title: "Please fill in all fields",
-        description: "Both name and feedback are required.",
+        title: "Missing Fields",
+        description: "Name, feedback, and rating are required.",
         variant: "destructive",
       });
       return;
@@ -37,22 +36,19 @@ const FeedbackForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Send feedback data to backend API
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, feedback }),
-      });
+      const response = await fetch(
+        `${import.meta.env.MODE === "development"
+          ? "http://localhost:5000"
+          : import.meta.env.VITE_BACKEND_URL
+        }/feedback`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, feedback, rating }),
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error('Failed to submit feedback');
-      }
-
-      // Optionally get response data
-      const data = await response.json();
-      console.log('Feedback saved:', data);
+      if (!response.ok) throw new Error("Failed to submit feedback");
 
       toast({
         title: "Thank you for your feedback!",
@@ -60,9 +56,10 @@ const FeedbackForm = () => {
         variant: "default",
       });
 
-      // Reset form
       setName('');
       setFeedback('');
+      setRating(0);
+
     } catch (error) {
       // Handle request failure
       console.error(error);
@@ -97,9 +94,12 @@ const FeedbackForm = () => {
               We'd love to hear from you
             </CardTitle>
           </CardHeader>
+
           <CardContent>
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-6">
+
+              {/* Name */}
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-foreground font-medium">Your Name</Label>
                 <Input
@@ -126,7 +126,26 @@ const FeedbackForm = () => {
                 />
               </div>
 
-              {/* Submit button (shows spinner when submitting) */}
+              {/* Rating */}
+              <div className="space-y-2">
+                <Label className="text-foreground font-medium">Your Rating</Label>
+
+                <div className="flex space-x-3 justify-center">
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <Star
+                      key={value}
+                      onClick={() => setRating(value)}
+                      className={`h-8 w-8 cursor-pointer transition-colors ${
+                        value <= rating
+                          ? "text-yellow-400 fill-yellow-400"
+                          : "text-gray-400"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Submit Button */}
               <Button
                 type="submit"
                 disabled={isSubmitting}
@@ -149,6 +168,7 @@ const FeedbackForm = () => {
             </form>
           </CardContent>
         </Card>
+
       </div>
     </section>
   );

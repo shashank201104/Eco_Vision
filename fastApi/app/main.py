@@ -18,7 +18,7 @@ app = FastAPI(title="Reusable Item Detector API")
 
 # Configure allowed origins for CORS
 allowed_origins = (
-    [origin.strip() for origin in (os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(","))]
+    [origin.strip() for origin in (os.getenv("ALLOWED_ORIGINS", "http://localhost:5000").split(","))]
 )
 app.add_middleware(
     CORSMiddleware,
@@ -47,7 +47,7 @@ async def health():
 # Detection endpoint
 # -----------------------------
 @app.post("/detect")
-async def detect(file: UploadFile = File(...), confidence: float = Form(0.5)):
+async def detect(file: UploadFile = File(...), confidence: float = Form(0.3)):
     """
         Upload an image, run detection and return JSON
         response with detections and annotated image.

@@ -1,13 +1,36 @@
-//Author - Pratham Khare
-import React, { useState } from 'react'
-import { Link } from "react-router-dom"
-import { Button } from "../components/ui/Button.jsx"
-import { Menu, X } from "lucide-react"
+// Author - Pratham Khare
+import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "../components/ui/Button.jsx";
+import { Menu, X } from "lucide-react";
+import { useAuthStore } from "../store/useAuthStore";
+import DefaultAvatar from "../assets/defaultProfileAvatar.png";
 
-const Header = ({ onAuthClick }) => {
+const Header = () => {
+  const navigate = useNavigate();
 
   // State to track whether mobile menu is open (true) or closed (false)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const dropdownRef = useRef(null);
+  const { authUser, logout } = useAuthStore();
+
+  const onAuthClick = () => {
+    navigate("/auth");
+  };
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <header className='fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-border z-50'>
       <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
@@ -48,7 +71,7 @@ const Header = ({ onAuthClick }) => {
         )}
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

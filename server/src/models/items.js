@@ -1,4 +1,11 @@
+//Author: Shashank
 import mongoose from "mongoose";
+
+//==================== Schema for item's data ==================
+//Name: stores the name of item (work as primary key)
+//Shelf Life: stores the shelf life (time period of using that item)
+//Carbon Footprint : stores the value(in kg) of carbon emission of item in its lifetime
+//Recycling Tips: Stores list containing tips to recycle the corresponding items
 
 const itemSchema = new mongoose.Schema(
   {
@@ -8,12 +15,12 @@ const itemSchema = new mongoose.Schema(
       trim: true,
     },
     shelf_Life: {
-      type: String, 
+      type: String,
       required: true,
     },
     carbon_Footprint: {
-      type: Number,     // in kg CO₂ equivalent
-      required: true, 
+      type: Number, // in kg CO₂ equivalent
+      required: true,
       min: 0,
     },
     recycle_Tips: {
@@ -23,7 +30,7 @@ const itemSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
