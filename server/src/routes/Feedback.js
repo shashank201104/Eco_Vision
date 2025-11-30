@@ -9,6 +9,7 @@ const router = express.Router();
 // ===============================
 router.get("/", async (req, res) => {
   try {
+    //fetching all feedbacks from database
     const feedbacks = await Feedback.find();
 
     return res.status(200).json(feedbacks);
@@ -29,12 +30,14 @@ router.post("/", async (req, res) => {
   try {
     const { name, feedback, rating } = req.body;
 
+    // checking for empty fields
     if (!name || !feedback || !rating) {
       return res.status(400).json({
         message: "Name, feedback, and rating are required",
       });
     }
 
+    //storing new feedback in database
     const newFeedback = new Feedback({ name, feedback, rating });
     await newFeedback.save();
 

@@ -1,4 +1,11 @@
+//Author- Shashank
 import mongoose from "mongoose";
+
+//======== Schema for User account =============
+//email:stores user's email (unique)
+//firstName: stores user's first name
+//lastname:stores user's last name
+//pasword: stores user's account password
 
 const UserSchema = new mongoose.Schema(
     {
