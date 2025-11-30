@@ -28,24 +28,25 @@ router.post("/", upload.single("file"), async (req, res) => {
 
     // Send request to FastAPI
     const fastApiUrl = "http://localhost:8000/detect";
-
+    
     const response = await axios.post(fastApiUrl, form, {
       headers: form.getHeaders(),
     });
-;
+
+    console.log("response ", response);
     // Get class name from detection
     const detectedClasses = response.data.detections.map((detection) => {
       return detection.class_name;
     });
 
+    if (!detectedClass) {
+      return res.status(404).json({ error: "No object detected" });
+    }
 
     // Fetch item details from your Express backend
-    const itemResponses =  await Promise.all(detectedClasses.map(async (detectedClass) => {
-      const temp = await axios.get(
-        `http://localhost:5000/items/${detectedClass}`
-      )
-      return temp.data;
-    }));
+    const itemResponse = await axios.get(
+      `http://localhost:5000/items/${detectedClass}`
+    );
 
     console.log("item response ", itemResponses);
     res.json({
@@ -53,7 +54,7 @@ router.post("/", upload.single("file"), async (req, res) => {
       AnnotatedImage: response.data.annotated_image,
     });
   } catch (err) {
-    console.error(err);
+    console.error(err );
     res.status(500).json({ error: err.message });
   }
 });

@@ -91,7 +91,6 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
   const fileInputRef = useRef(null);
 
   const handleShowPopup = (data) => {
-    console.log("Server response:", data);
     if (data && data.AnnotatedImage) {
       setPopupImage(data.AnnotatedImage);
       setPopupData(data.itemData);
@@ -116,11 +115,10 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
     formData.append("file", fileToUpload);
 
     try {
-      const res = await axios.post("http://localhost:5000/upload", formData, {
+      const res = await axios.post(`${import.meta.env.MODE==="development"?"http://localhost:5000":import.meta.env.VITE_BACKEND_URL}/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log("Upload success:", res.data);
-      // alert("File uploaded successfully!");
+      alert("File uploaded successfully!");
       handleShowPopup(res.data);
     } catch (err) {
       console.error("Upload error:", err);
