@@ -9,7 +9,7 @@ import heroBg3 from "../assets/hero-bg-3.jpg";
 import { useAuthStore } from "../store/useAuthStore";
 import axios from "axios";
 
-// ⭐ preexisting toast library
+// ⭐ react-hot-toast (pre-existing toast library)
 import toast, { Toaster } from "react-hot-toast";
 
 // POPUP TO SHOW THE RETURNED ANNOTATED IMAGE
@@ -44,7 +44,7 @@ const ImagePopup = ({ imageBase64, onClose }) => {
 const HeroSection = () => {
   // States
   const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(false); // upload loader state
   const [popupImage, setPopupImage] = useState(null);
 
   const fileInputRef = useRef(null);
@@ -54,14 +54,14 @@ const HeroSection = () => {
   const videoRef = useRef(null);
   const [cameraOpen, setCameraOpen] = useState(false);
 
-  // Show YOLO image
+  // Show YOLO annotated image
   const handleShowPopup = (data) => {
     if (data && data.AnnotatedImage) {
       setPopupImage(data.AnnotatedImage);
     }
   };
 
-  // File select
+  // File input selection
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected) {
@@ -71,7 +71,7 @@ const HeroSection = () => {
     }
   };
 
-  // Upload logic
+  // Upload file or camera capture
   const handleUpload = async (fileToUpload) => {
     if (!fileToUpload) return toast.error("Please select a file first");
 
@@ -163,6 +163,16 @@ const HeroSection = () => {
       {/* ⭐ Pre-existing Toast container */}
       <Toaster position="top-right" reverseOrder={false} />
 
+      {/* ⭐ UPLOADING OVERLAY */}
+      {uploading && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-[9999]">
+          <div className="w-12 h-12 border-4 border-white border-t-green-500 rounded-full animate-spin"></div>
+          <p className="text-white mt-4 text-lg font-semibold tracking-wide">
+            Uploading...
+          </p>
+        </div>
+      )}
+
       {/* Background images */}
       {backgrounds.map((bg, index) => (
         <div
@@ -186,7 +196,9 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-xl sm:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
-            AI-powered detection to identify recyclable items...
+            AI-powered detection to identify recyclable items, calculate carbon
+            footprint, and provide personalized recycling tips for a sustainable
+            future.
           </p>
 
           {/* Show Upload buttons only when logged in */}
