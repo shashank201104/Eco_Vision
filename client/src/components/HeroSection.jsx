@@ -44,7 +44,6 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
   const fileInputRef = useRef(null);
 
   const handleShowPopup = (data) => {
-    console.log("Server response:", data);
     if (data && data.AnnotatedImage) {
       setPopupImage(data.AnnotatedImage);
     } else {
@@ -71,7 +70,6 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
       const res = await axios.post(`${import.meta.env.MODE==="development"?"http://localhost:5000":import.meta.env.VITE_BACKEND_URL}/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log("Upload success:", res.data);
       alert("File uploaded successfully!");
       handleShowPopup(res.data);
     } catch (err) {
