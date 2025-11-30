@@ -1,6 +1,5 @@
 //Author - Pratham Khare, Manish Aggarwal
 
-
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Camera } from "lucide-react";
@@ -10,6 +9,10 @@ import heroBg3 from "../assets/hero-bg-3.jpg";
 import { useAuthStore } from "../store/useAuthStore";
 import axios from "axios";
 
+// ⭐ preexisting toast library
+import toast, { Toaster } from "react-hot-toast";
+
+// POPUP TO SHOW THE RETURNED ANNOTATED IMAGE
 const ImagePopup = ({ imageBase64, onClose }) => {
   if (!imageBase64) return null;
 
@@ -39,6 +42,7 @@ const ImagePopup = ({ imageBase64, onClose }) => {
 };
 
 const HeroSection = () => {
+  // States
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [popupImage, setPopupImage] = useState(null);
@@ -50,12 +54,14 @@ const HeroSection = () => {
   const videoRef = useRef(null);
   const [cameraOpen, setCameraOpen] = useState(false);
 
+  // Show YOLO image
   const handleShowPopup = (data) => {
     if (data && data.AnnotatedImage) {
       setPopupImage(data.AnnotatedImage);
     }
   };
 
+  // File select
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected) {
@@ -65,8 +71,9 @@ const HeroSection = () => {
     }
   };
 
+  // Upload logic
   const handleUpload = async (fileToUpload) => {
-    if (!fileToUpload) return alert("Please select a file first");
+    if (!fileToUpload) return toast.error("Please select a file first");
 
     const formData = new FormData();
     formData.append("file", fileToUpload);
@@ -82,18 +89,18 @@ const HeroSection = () => {
         { headers: { "Content-Type": "multipart/form-data" } }
       );
 
-      alert("File uploaded successfully!");
+      toast.success("File uploaded successfully!");
       handleShowPopup(res.data);
     } catch (err) {
       console.error("Upload error:", err);
-      alert("Upload failed!");
+      toast.error("Upload failed!");
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
 
-  // CAMERA FUNCTIONS
+  // Start camera
   const startCamera = async () => {
     setCameraOpen(true);
 
@@ -103,19 +110,20 @@ const HeroSection = () => {
         videoRef.current.srcObject = stream;
       }
     } catch (error) {
-      alert("Could not access camera");
+      toast.error("Could not access camera");
       console.error(error);
     }
   };
 
+  // Stop camera
   const stopCamera = () => {
     setCameraOpen(false);
+
     const stream = videoRef.current?.srcObject;
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-    }
+    if (stream) stream.getTracks().forEach((track) => track.stop());
   };
 
+  // Capture → upload
   const capturePhoto = () => {
     const video = videoRef.current;
     const canvas = document.createElement("canvas");
@@ -151,6 +159,11 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+
+      {/* ⭐ Pre-existing Toast container */}
+      <Toaster position="top-right" reverseOrder={false} />
+
+      {/* Background images */}
       {backgrounds.map((bg, index) => (
         <div
           key={index}
@@ -161,8 +174,10 @@ const HeroSection = () => {
         />
       ))}
 
+      {/* HERO CONTENT */}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <div className="animate-fade-in">
+
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             Transform Your
             <span className="block text-white-500 bg-clip-text">
@@ -171,12 +186,12 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-xl sm:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
-            AI-powered detection to identify recyclable items, calculate carbon
-            footprint, and provide personalized recycling tips for a sustainable
-            future.
+            AI-powered detection to identify recyclable items...
           </p>
 
+          {/* Show Upload buttons only when logged in */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+
             {authUser && (
               <>
                 {/* Choose Photo */}
@@ -220,12 +235,14 @@ const HeroSection = () => {
               </>
             )}
 
+            {/* Annotated Image Popup */}
             {popupImage && (
               <ImagePopup
                 imageBase64={popupImage}
                 onClose={() => setPopupImage(null)}
               />
             )}
+
           </div>
         </div>
       </div>
@@ -234,6 +251,7 @@ const HeroSection = () => {
       {cameraOpen && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg shadow-lg">
+
             <video
               ref={videoRef}
               autoPlay
@@ -242,6 +260,7 @@ const HeroSection = () => {
             ></video>
 
             <div className="flex justify-center gap-4 mt-4">
+
               <button
                 onClick={capturePhoto}
                 className="px-6 py-2 bg-green-600 text-white rounded-full shadow hover:bg-green-700"
@@ -255,10 +274,12 @@ const HeroSection = () => {
               >
                 Cancel
               </button>
+
             </div>
           </div>
         </div>
       )}
+
     </section>
   );
 };
