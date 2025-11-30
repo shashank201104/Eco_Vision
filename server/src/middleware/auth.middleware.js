@@ -1,6 +1,9 @@
+//author - Shashank
+
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
+//Function to validate the user's authentication
 export const secureRoute = async (req, res, next) => {
   try {
     const token = req.cookies.jwt;
@@ -9,6 +12,7 @@ export const secureRoute = async (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized - No Token Provided" });
     }
 
+    //fetching and verfying using JWT stored in cookies
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     if (!decoded) {

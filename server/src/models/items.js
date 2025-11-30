@@ -1,11 +1,12 @@
 //Author: Shashank
 import mongoose from "mongoose";
 
-//Schema for item's data in database
+//==================== Schema for item's data ==================
 //Name: stores the name of item (work as primary key)
 //Shelf Life: stores the shelf life (time period of using that item)
 //Carbon Footprint : stores the value(in kg) of carbon emission of item in its lifetime
 //Recycling Tips: Stores list containing tips to recycle the corresponding items
+
 const itemSchema = new mongoose.Schema(
   {
     name: {
