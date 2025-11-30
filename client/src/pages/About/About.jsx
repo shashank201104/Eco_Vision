@@ -1,8 +1,11 @@
+// Author - Manish Aggarwal
 import React from "react";
 import styles from "./About.module.css";
 import { Link } from "react-router-dom";
 
 import TeamMemberCard from "../../components/TeamMemberCard/TeamMemberCard";
+
+// Team members data
 const team = [
   {
     name: "Alex Johnson",
@@ -38,13 +41,17 @@ const team = [
 
 const About = () => {
   return (
+    // Main container
     <div className={styles.container}>
+    
+      {/* Back navigation */}
       <div className={styles.backLink}>
         <Link to="/" className={styles.backButton}>
           ← Back to Home
         </Link>
       </div>
 
+      {/* Hero section */}
       <section className={styles.hero}>
         <h1 className={styles.heading}>Meet Our Team</h1>
         <p className={styles.subheading}>
@@ -54,6 +61,7 @@ const About = () => {
         </p>
       </section>
 
+      {/* Mission section */}
       <section className={styles.missionSection}>
         <h2 className={styles.missionHeading}>Our Mission</h2>
         <p className={styles.missionText}>
@@ -65,6 +73,7 @@ const About = () => {
         </p>
       </section>
 
+      {/* Team member cards */}
       <section className={styles.TeamMembers}>
         <div className={styles.grid}>
           {team.map((member, index) => (
@@ -73,6 +82,7 @@ const About = () => {
         </div>
       </section>
 
+      {/* Values section */}
       <section className={styles.valuesSection}>
         <h2>Our Values</h2>
 
@@ -85,8 +95,9 @@ const About = () => {
               long-term sustainability.
             </p>
           </div>
+
           <div className={styles.card}>
-              <img src="/assets/values/ecoVisionLogo.png" />
+            <img src="/assets/values/ecoVisionLogo.png" />
             <h3>Community</h3>
             <p>
               We believe in the power of collective action and building
@@ -95,7 +106,7 @@ const About = () => {
           </div>
 
           <div className={styles.card}>
-              <img src="/assets/values/ecoVisionLogo.png" />
+            <img src="/assets/values/ecoVisionLogo.png" />
             <h3>Innovation</h3>
             <p>
               We continuously push the boundaries of technology to create better
@@ -104,6 +115,7 @@ const About = () => {
           </div>
         </div>
       </section>
+
     </div>
   );
 };

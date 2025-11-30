@@ -1,5 +1,8 @@
+/* Author - Manish Aggarwal */
+
 .backLink {
   padding-top: 10vh;
+  padding-left: 8rem;         
 }
 
 .hero,
@@ -9,35 +12,37 @@
 }
 
 .backLink {
-  padding-left: 10rem;
   font-weight: 500;
   font-size: 0.9rem;
 }
+
+/* Main page heading */
 .heading {
   padding-top: 1.5rem;
   font-size: 3rem;
   font-weight: 700;
   text-align: center;
-  line-height: 3rem;
+  line-height: 3.2rem;         
 }
 
 .subheading {
   font-size: 1.2rem;
   margin: auto;
   text-align: center;
-  width: 52vw;
-  padding-bottom: 8vh;
+  width: 48vw;                  
+  padding-bottom: 7vh;          
   font-weight: 400;
-  line-height: 2rem;
-  padding-top: 1.5rem;
+  line-height: 1.9rem;
+  padding-top: 1.2rem;
 }
 
 .missionSection {
   background-color: white;
 }
+
 .missionHeading {
   padding-top: 2rem;
-  font-size: 2rem;
+  font-size: 2.3rem;           
   font-weight: 700;
   text-align: center;
   line-height: 3rem;
@@ -47,68 +52,162 @@
   font-size: 18px;
   margin: auto;
   text-align: center;
-  width: 57vw;
-  padding-bottom: 8vh;
+  width: 52vw;                  
+  padding-bottom: 7vh;
   font-weight: 400;
-  line-height: 1.8rem;
+  line-height: 1.9rem;
   padding-top: 1.5rem;
   color: hsl(var(--muted-foreground));
 }
 
+/* Team members background */
 .TeamMembers {
   background-color: hsl(var(--muted) / 0.5);
+  padding-top: 2rem;
+  padding-bottom: 3rem;
 }
 
+/* Responsive grid for team cards */
 .grid {
-  padding: 4rem;
-  gap: 2rem;
+  padding: 3rem;                
+  gap: 2.5rem;                 
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  max-width: 1200px;           
+  margin: auto;
 }
 
 .valuesSection h2 {
   color: hsl(var(--foreground));
   font-weight: 700;
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+  font-size: 2rem;
   text-align: center;
   margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;        
 }
 
 .cards {
   display: flex;
-  flex-direction: row;
   justify-content: center;
+  gap: 3rem;                    
+  max-width: 1000px;
+  margin: auto;
 }
 
 .card {
-  max-width: 25vw;
-}
-.card h3 {
-  color: hsl(var(--foreground));
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  margin-bottom: 0.75rem;
+  max-width: 22vw;             
   text-align: center;
-  margin-top: 1rem;
-}
-
-.card p {
-  text-align: center;
-  font-size: 1rem;
-  color: hsl(var(--muted-foreground));
-  margin-bottom: 2.5rem;
 }
 
 .card img {
   width: 4rem;
   height: 4rem;
   border-radius: 9999px;
-  border: 0px;
   margin: auto;
+}
 
+/* Card title */
+.card h3 {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.card p {
+  color: hsl(var(--muted-foreground));
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6rem;
+}
+
+
+
+/* Tablet adjustments */
+@media (max-width: 992px) {
+  .backLink {
+    padding-left: 2rem;
+    font-size: 0.85rem;
+  }
+
+  .subheading,
+  .missionText {
+    width: 80vw;
+  }
+
+  .card {
+    max-width: 40vw;
+  }
+
+  .cards {
+    flex-wrap: wrap;
+  }
+}
+
+/* Small laptop / large mobile */
+@media (max-width: 768px) {
+  .heading {
+    font-size: 2.2rem;
+    line-height: 2.5rem;
+  }
+
+  .subheading {
+    width: 90vw;
+    font-size: 1rem;
+  }
+
+  .missionText {
+    width: 90vw;
+    font-size: 1rem;
+  }
+
+  .grid {
+    padding: 2rem;
+  }
+
+  .card {
+    max-width: 80vw;
+  }
+
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 480px) {
+  .backLink {
+    padding-left: 1rem;
+  }
+
+  .heading {
+    font-size: 1.8rem;
+  }
+
+  .subheading {
+    font-size: 0.9rem;
+    width: 95vw;
+  }
+
+  .missionHeading {
+    font-size: 1.6rem;
+  }
+
+  .missionText {
+    font-size: 0.9rem;
+    width: 95vw;
+  }
+
+  .grid {
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .card img {
+    width: 3rem;
+    height: 3rem;
+  }
 }
