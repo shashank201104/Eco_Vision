@@ -8,6 +8,7 @@ import ItemRoutes from "./routes/itemRoutes.js"
 import UploadRoutes from "./routes/uploadRoutes.js"
 import Auth from "./routes/Auth.js"
 import cookieparser from "cookie-parser"
+import FeedbackRoutes from "./routes/Feedback.js"
 dotenv.config();
 connectDB();
 
@@ -32,6 +33,8 @@ app.use("/items",ItemRoutes);
 
 //route for upload user's image for item recognition 
 app.use("/upload",UploadRoutes);
+
+app.use("/feedback",FeedbackRoutes);
 
 app.get("/",(req,res)=>{
     res.send("Backend is LIVE!")

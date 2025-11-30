@@ -1,54 +1,49 @@
-//Author - Pratham Khare
-import React, { useState } from 'react';
-import { Card, CardContent } from './ui/Card.jsx';
-import { Button } from './ui/Button.jsx';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+// Author - Pratham Khare
+import React, { useState, useEffect } from "react";
+import { Card, CardContent } from "./ui/Card.jsx";
+import { Button } from "./ui/Button.jsx";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { axiosInstance } from "../lib/axios.js";
 
-const testimonials = [
-  {
-    id: 1,
-    name: 'Sarah Johnson',
-    location: 'San Francisco, CA',
-    rating: 5,
-    feedback: 'EcoVision has completely transformed how I approach recycling! The AI detection is incredibly accurate, and I love seeing my carbon footprint reduction in real-time.',
-    avatar: '👩🏻‍💼',
-  },
-  {
-    id: 2,
-    name: 'Mark Chen',
-    location: 'Seattle, WA',
-    rating: 5,
-    feedback: 'As a family, we\'ve learned so much about proper recycling through this app. The tips are practical and easy to follow. Highly recommend!',
-    avatar: '👨🏻‍🔧',
-  },
-  {
-    id: 3,
-    name: 'Emily Rodriguez',
-    location: 'Austin, TX',
-    rating: 4,
-    feedback: 'The photo recognition feature is amazing! I never knew some items could be recycled differently. This app has made me much more environmentally conscious.',
-    avatar: '👩🏽‍🎓',
-  },
-  {
-    id: 4,
-    name: 'David Park',
-    location: 'Portland, OR',
-    rating: 5,
-    feedback: 'Great tool for our office sustainability program. The carbon footprint tracking helps us measure our environmental impact effectively.',
-    avatar: '👨🏻‍💻',
-  },
-  {
-    id: 5,
-    name: 'Lisa Thompson',
-    location: 'Denver, CO',
-    rating: 5,
-    feedback: 'I love how user-friendly this is. Even my kids can use it to learn about recycling. It\'s educational and fun!',
-    avatar: '👩🏼‍🏫',
-  },
-];
+const ROTATE_INTERVAL = 4000; // 4 seconds auto rotate
 
 const UserTestimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // --------------------------
+  // Fetch testimonials from API
+  // --------------------------
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await axiosInstance.get("/feedback");
+        setTestimonials(res.data);
+      } catch (err) {
+        console.error("Failed to load testimonials", err);
+      }
+    };
+
+    fetchTestimonials();
+
+    // Optional: auto-refresh every 15 sec to check for new feedback
+    const refreshInterval = setInterval(fetchTestimonials, 15000);
+
+    return () => clearInterval(refreshInterval);
+  }, []);
+
+  // --------------------------
+  // Auto rotate every 4 seconds
+  // --------------------------
+  useEffect(() => {
+    if (testimonials.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, ROTATE_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [testimonials]);
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -58,7 +53,14 @@ const UserTestimonials = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const currentTestimonial = testimonials[currentIndex];
+  if (testimonials.length === 0)
+    return (
+      <p className="text-center py-10 text-muted-foreground">
+        Loading testimonials...
+      </p>
+    );
+
+  const current = testimonials[currentIndex];
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/50">
@@ -76,36 +78,33 @@ const UserTestimonials = () => {
           <Card className="shadow-medium border-0 bg-card/80 backdrop-blur-sm">
             <CardContent className="p-8 sm:p-12">
               <div className="text-center">
-                {/* Avatar */}
-                <div className="text-6xl mb-4">
-                  {currentTestimonial.avatar}
-                </div>
 
                 {/* Rating */}
                 <div className="flex justify-center mb-4">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
-                      className={`h-5 w-5 ${i < currentTestimonial.rating
-                          ? 'text-yellow-400 fill-current'
-                          : 'text-gray-300'
-                        }`}
+                      className={`h-5 w-5 ${
+                        i < (current.rating || 5)
+                          ? "text-yellow-400 fill-current"
+                          : "text-gray-300"
+                      }`}
                     />
                   ))}
                 </div>
 
                 {/* Feedback */}
                 <blockquote className="text-lg sm:text-xl text-foreground mb-6 italic leading-relaxed">
-                  "{currentTestimonial.feedback}"
+                  "{current.feedback}"
                 </blockquote>
 
                 {/* User Info */}
-                <div className="text-center">
+                <div>
                   <p className="font-semibold text-foreground text-lg">
-                    {currentTestimonial.name}
+                    {current.name}
                   </p>
                   <p className="text-muted-foreground">
-                    {currentTestimonial.location}
+                    {current.location || ""}
                   </p>
                 </div>
               </div>
@@ -114,35 +113,26 @@ const UserTestimonials = () => {
 
           {/* Navigation Buttons */}
           <div className="flex justify-center items-center mt-8 space-x-4">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={prevTestimonial}
-              className="rounded-full"
-            >
+            <Button variant="outline" size="icon" onClick={prevTestimonial} className="rounded-full">
               <ChevronLeft className="h-4 w-4" />
             </Button>
 
-            {/* Dots Indicator */}
+            {/* Dots */}
             <div className="flex space-x-2">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex
-                      ? 'bg-[hsl(var(--primary))]' 
-                      : 'bg-[hsl(var(--muted-foreground)/0.3)]'
-                    }`}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    index === currentIndex
+                      ? "bg-[hsl(var(--primary))]"
+                      : "bg-[hsl(var(--muted-foreground)/0.3)]"
+                  }`}
                 />
               ))}
             </div>
 
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={nextTestimonial}
-              className="rounded-full"
-            >
+            <Button variant="outline" size="icon" onClick={nextTestimonial} className="rounded-full">
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
