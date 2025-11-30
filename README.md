@@ -1,39 +1,38 @@
+---
+
 # 🌱 **Eco Vision – FastAPI Backend**
 
-*A custom-trained YOLO object-detection API that promotes recycling, reuse, and sustainability.*
+This repository contains the backend service for **Eco Vision**, a sustainability-focused application that detects household items using a **custom-trained YOLO model** and provides **reuse or recycling tips** for each item.
 
-The Eco Vision backend:
+The backend integrates:
 
-* Runs detection using **your custom YOLO model**
-* Attaches **reuse / recycling tips** for each detected item
-* Returns **annotated images** (Base64)
-* Powers the Eco Vision frontend
-* Is deployed on **Render**
-* Includes the **full ML training workflow** and all YOLO training outputs
-
-This is your complete AI inference system.
+* A custom YOLO model trained on 30 recyclable/reusable object classes
+* A FastAPI service for inference and image annotation
+* Reuse-tip mapping for sustainability guidance
+* Deployment-ready configurations (Docker + Render)
+* Full ML training artifacts for transparency and reproducibility
 
 ---
 
-# 🌍 **Live API**
+# 🌍 **Live API (Render Deployment)**
+
+Base URL:
 
 ```
 https://eco-vision-1.onrender.com
 ```
 
-Swagger UI:
+Interactive API documentation:
 
 ```
 https://eco-vision-1.onrender.com/docs
 ```
 
-Upload an image here to see detections, confidences, reuse tips, and annotated output.
+The interface supports image uploads and displays detections, reuse tips, and annotated output.
 
 ---
 
 # 📁 **Project Structure**
-
-This is the complete structure of your `fastapi/` backend folder:
 
 ```
 fastapi/
@@ -82,7 +81,7 @@ fastapi/
 │               │   │   train_batch2.jpg
 │               │   │
 │               │   └── weights/
-│               │           best.pt     ← FINAL TRAINED MODEL
+│               │           best.pt     ← final trained model
 │               │           last.pt
 │               │
 │               └── train/
@@ -120,80 +119,117 @@ fastapi/
     ├── services/
     │   └── detection_service.py
     │
-    ├── main.py   ← FastAPI app entrypoint
+    ├── main.py
     │
     └── weights/
-        └── best.pt   ← copied from ML work for production use
+        └── best.pt   ← model used by the API
 ```
 
 ---
 
-# 🤖 **Custom YOLO Model**
+# 🤖 **Model Overview**
 
-Your final production model is:
+The backend uses a **custom-trained YOLO model** with 30 household object classes, such as:
+
+* Banana
+* Tomato
+* Tin can
+* Bottle
+* Paper towel
+* Milk
+* Plastic bag
+* Light bulb
+* Toothbrush
+* Snack
+* Pasta
+* Pastry
+* Fast food
+* Cake
+* Hamburger
+
+The final model is located at:
 
 ```
 ML work/dest/runs/detect/custom_yolo_training/weights/best.pt
 ```
 
-This file is manually copied into:
+and is copied into:
 
 ```
 app/weights/best.pt
 ```
 
-and loaded using `.env`:
-
-```
-MODEL_PATH=app/weights/best.pt
-```
-
-The model has **30 custom classes** (Banana, Bottle, Light bulb, Plastic bag, Cake, Pasta, etc.).
+for production inference.
 
 ---
 
-# 🧠 **How the Backend Works**
+# 🧠 **System Architecture**
 
-### **1. YOLO Model Layer (`yolo_detector.py`)**
+### **1. Model Layer – `yolo_detector.py`**
 
-* Loads the YOLO model
-* Detects only your 30 custom classes
-* Returns:
+Handles:
 
-  * class ID
-  * class name
-  * bounding box
-  * confidence (raw + %)
-* Draws bounding boxes + labels on the image
+* YOLO model loading
+* Device selection (CPU/GPU)
+* Object detection
+* Bounding box + confidence extraction
+* Image annotation
 
-### **2. Detection Service (`detection_service.py`)**
+### **2. Service Layer – `detection_service.py`**
 
-* Runs detection
-* Loads reuse tips from `reuse_mapping.json`
-* Adds `"reuse_tip"` to each detected item
-* Returns:
+Handles:
 
-  * detections
-  * annotated RGB image (for Base64 conversion)
-  * total count
+* Running YOLO inference
+* Attaching reuse tips
+* Formatting detection results
+* Returning annotated images as numpy arrays
 
-### **3. FastAPI Layer (`main.py`)**
+### **3. API Layer – `main.py`**
 
-Endpoints:
+Provides:
 
 ```
 GET /health
 POST /detect
 ```
 
-`/detect`:
+`/detect` accepts an uploaded image, performs detection, attaches reuse tips, annotates the image, and returns JSON + Base64.
 
-1. Accepts file upload
-2. Saves it temporarily
-3. Runs detection
-4. Encodes annotated image to Base64
-5. Returns JSON response
-6. Deletes temp file
+---
+
+# ⚙️ **Installation & Local Development**
+
+### Clone the repository
+
+```bash
+git clone https://github.com/shashank201104/Eco_Vision.git
+cd Eco_Vision/fastapi
+```
+
+### Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+or:
+
+```bash
+bash build.sh
+```
+
+### Start the API
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Access locally:
+
+```
+http://127.0.0.1:8000
+http://127.0.0.1:8000/docs
+```
 
 ---
 
@@ -203,13 +239,13 @@ POST /detect
 
 ### Request:
 
-Upload an image as `file`.
+Multipart form with a single file.
 
-### Example (curl):
+### Example:
 
 ```bash
 curl -X POST "https://eco-vision-1.onrender.com/detect" \
-  -F "file=@test.jpg"
+     -F "file=@test.jpg"
 ```
 
 ### Example Response:
@@ -226,27 +262,27 @@ curl -X POST "https://eco-vision-1.onrender.com/detect" \
       "reuse_tip": "Repurpose as a water bottle, planter, or storage container."
     }
   ],
-  "annotated_image": "<BASE64_STRING>"
+  "annotated_image": "<BASE64_ENCODED_JPEG>"
 }
 ```
 
-Render this in frontend:
+The image can be displayed directly:
 
 ```js
-<img src={`data:image/jpeg;base64,${data.annotated_image}`} />
+<img src={`data:image/jpeg;base64,${annotated_image}`} />
 ```
 
 ---
 
 # 🧪 **Testing the API**
 
-You can test with the images located directly inside:
+Test images are available in:
 
 ```
 fastapi/ML work/
 ```
 
-Or upload any custom picture through:
+Alternatively, use the deployed Swagger interface:
 
 ```
 https://eco-vision-1.onrender.com/docs
@@ -256,69 +292,63 @@ https://eco-vision-1.onrender.com/docs
 
 # 🐳 **Deployment (Render)**
 
-Your backend is deployed on Render at:
+### Environment Variables
 
-```
-https://eco-vision-1.onrender.com
-```
-
-### Required Environment Variables (Render Dashboard):
+In Render Dashboard → Environment:
 
 ```
 MODEL_PATH=app/weights/best.pt
 ALLOWED_ORIGINS=https://eco-vision-lzem.onrender.com
 ```
 
-### Start Command (Render):
+### Start Command
 
 ```
 uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
-Render automatically injects `$PORT`.
+### Build Command
 
-### Build Command:
-
-Handled by your Dockerfile.
+Handled by the Dockerfile.
 
 ---
 
 # 🔁 **Updating the YOLO Model**
 
-To update the model after retraining:
+To update the inference model:
 
-1. Go to your training output:
+1. Train a new model via the notebook
+2. Locate the new weights:
 
    ```
    ML work/dest/runs/detect/custom_yolo_training/weights/best.pt
    ```
-
-2. Copy the updated best.pt to:
+3. Replace:
 
    ```
    app/weights/best.pt
    ```
-
-3. Redeploy or restart the FastAPI server.
+4. Redeploy or restart the backend service
 
 ---
 
-# 🎯 **Purpose of This Backend**
+# 🎯 **Purpose**
 
-This service provides:
+This backend serves as the inference engine for Eco Vision.
+It combines:
 
-* Real-time recognition of recyclable or reusable items
-* Sustainability-oriented suggestions
-* Visual annotations
-* A clean JSON API for frontend or mobile apps
+* Object detection
+* Sustainability guidance
+* Visual annotation
+* Easy integration with frontends
 
-It is the **AI engine** behind the Eco Vision project.
+and enables the Eco Vision application to promote environmentally responsible habits.
 
 ---
 
 # 👤 **Author**
 
-**Shivansh Gupta**
-Creator of Eco Vision — ML + backend + deployment.
+Shivansh Gupta
+Eco Vision – ML, backend, training, and deployment.
 
 ---
