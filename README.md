@@ -40,31 +40,6 @@ This is where the magic happens. Our advanced AI instantly identifies reusable a
 Once you know what you have, we tell you what to do next. Eco Vision smartly connects you to the nearest certified recycling centers and disposal services, making the final step of responsible disposal quick and convenient.
 
 
-
-## Key Features & USP
-
-
-- **AI-Powered Detection:**: Instantly detects reusable and recyclable items in an uploaded image
-- **Context-Aware Guidance**: Provides instant, context-aware reuse and recycle tips.
-- **Location-Based Results**: Fetches nearby recycling centers using Google Places/OpenStreetMap
-- **Cross-Platform Access**: Runs on any device with potential offline PWA support
-- **Custom Model**: The AI model is specifically tuned for Indian waste categories.
-
-## Tech Stack
-
-
-## Architecture 
-The architecture follows this pipeline:
-
-1. User Interaction: User uploads or captures a photo and grants location access
-2. Frontend (React): Sends the data (image + location) to the Node.js backend API.
-3. Backend (Node.js): Forwards the image to the dedicated Python AI service.
-4. AI Service (Python/YOLOv8): Performs object detection and annotation.
-5. External APIs (): Fetches nearby recycling centers
-6. Frontend Display: Renders the annotated photo, reuse tips, and a list of recycling centers.
-
-
-
 ## Installation & Setup
 
 1. Clone the repository:
@@ -92,12 +67,30 @@ The architecture follows this pipeline:
     pip install -r requirements.txt
     uvicorn main:app --reload
     ```
-5. Create .env Files
-   ```bash
-   GOOGLE_PLACES_KEY=
-   MONGO_URI=
-   AI_SERVICE_URL=   
-   ``` 
+
+
+## Key Features & USP
+
+- **AI-Powered Detection:**: Instantly detects reusable and recyclable items in an uploaded image
+- **Context-Aware Guidance**: Provides instant, context-aware reuse and recycle tips.
+- **Location-Based Results**: Fetches nearby recycling centers using Google Places/OpenStreetMap
+- **Cross-Platform Access**: Runs on any device with potential offline PWA support
+- **Custom Model**: The AI model is specifically tuned for Indian waste categories.
+
+## Tech Stack
+
+
+## Architecture 
+
+The architecture follows this pipeline:
+
+1. User Interaction: User uploads or captures a photo and grants location access
+2. Frontend (React): Sends the data (image + location) to the Node.js backend API.
+3. Backend (Node.js): Forwards the image to the dedicated Python AI service.
+4. AI Service (Python/YOLOv8): Performs object detection and annotation.
+5. External APIs (): Fetches nearby recycling centers
+6. Frontend Display: Renders the annotated photo, reuse tips, and a list of recycling centers.
+
 
 ## Future Enhancements
 
@@ -106,10 +99,6 @@ The architecture follows this pipeline:
 - Mobile app (React Native)
 - Offline PWA support
 - Automatic waste pickup scheduling
-
-## License
-
-MIT License © 2025 Developed by Team Code Knights
 
 ## Contact
 
