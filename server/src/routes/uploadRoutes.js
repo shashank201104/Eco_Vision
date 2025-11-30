@@ -5,20 +5,33 @@ import multer from "multer";
 
 const router = express.Router();
 
-// Multer setup: keep uploaded file in memory (not saved to disk)
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 }, // limit = 5 MB
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// upload route for sending image from frontend to FastApi backend for item recognition
+// ---------------------------
+// HELPER: Correct base URL
+// ---------------------------
+const getBaseUrl = (req) => {
+  // In production, always use ENV BASE_URL
+  if (process.env.NODE_ENV === "production") {
+    return process.env.BASE_URL; // e.g. https://yourdomain.com
+  }
+
+  // Development fallback
+  return `${req.protocol}://${req.get("host")}`;
+};
+
+// ---------------------------
+// Upload Route
+// ---------------------------
 router.post("/", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    // Create a FormData object to send to FastAPI
     const form = new FormData();
     form.append("file", req.file.buffer, {
       filename: req.file.originalname,
@@ -26,34 +39,38 @@ router.post("/", upload.single("file"), async (req, res) => {
     });
     form.append("confidence", "0.5");
 
-    // Send request to FastAPI
-    const fastApiUrl = "http://localhost:8000/detect";
+    // FastAPI URL safe assignment
+    const fastApiUrl =
+      process.env.NODE_ENV === "production"
+        ? `${process.env.FASTAPI_URL}/detect/`
+        : "http://localhost:8000/detect/";
 
-    const response = await axios.post(fastApiUrl, form, {
+    const fastResponse = await axios.post(fastApiUrl, form, {
       headers: form.getHeaders(),
     });
-;
-    // Get class name from detection
-    const detectedClasses = response.data.detections.map((detection) => {
-      return detection.class_name;
-    });
 
+    const detectedClasses = fastResponse.data.detections.map(
+      (d) => d.class_name
+    );
 
-    // Fetch item details from your Express backend
-    const itemResponses =  await Promise.all(detectedClasses.map(async (detectedClass) => {
-      const temp = await axios.get(
-        `http://localhost:5000/items/${detectedClass}`
-      )
-      return temp.data;
-    }));
+    // Build base URL properly
+    const baseUrl = getBaseUrl(req);
 
-    console.log("item response ", itemResponses);
+    // Faster: 1 request instead of many (if your /items supports query)
+    // Otherwise fallback to Promise.all
+    const itemResponses = await Promise.all(
+      detectedClasses.map(async (c) => {
+        const itemRes = await axios.get(`${baseUrl}/items/${c}`);
+        return itemRes.data;
+      })
+    );
+
     res.json({
       itemData: itemResponses,
-      AnnotatedImage: response.data.annotated_image,
+      AnnotatedImage: fastResponse.data.annotated_image,
     });
   } catch (err) {
-    console.error(err);
+    console.error("Error in upload route:", err.message);
     res.status(500).json({ error: err.message });
   }
 });

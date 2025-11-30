@@ -8,16 +8,16 @@ import ItemRoutes from "./routes/itemRoutes.js"
 import UploadRoutes from "./routes/uploadRoutes.js"
 import Auth from "./routes/Auth.js"
 import cookieparser from "cookie-parser"
-
+import FeedbackRoutes from "./routes/Feedback.js"
 dotenv.config();
 connectDB();
 
 const app = express();
 const PORT= process.env.PORT || 5000;
 
-//using cors for cross origin access and json for api's data parsing 
+//using cors for cross origin access and json for api's data parsing
 app.use(cors(
-    { origin: 'http://localhost:5173',
+    { origin:process.env.NODE_ENV==="production" ? process.env.CLIENT_URL : "http://localhost:5173",
     credentials: true }
 
 ));
@@ -34,10 +34,12 @@ app.use("/items",ItemRoutes);
 //route for upload user's image for item recognition 
 app.use("/upload",UploadRoutes);
 
+app.use("/feedback",FeedbackRoutes);
+
 app.get("/",(req,res)=>{
     res.send("Backend is LIVE!")
 })
 
 app.listen(PORT,()=>{
-console.log(`server running at http://localhost:${PORT}`)
+console.log(`server running`)
 })
