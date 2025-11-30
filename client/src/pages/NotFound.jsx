@@ -1,13 +1,17 @@
 //Author - Pratham Khare
+
+
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 const NotFound = () => {
+  // useLocation provides access to the current URL path
   const location = useLocation();
 
   useEffect(() => {
+    // Logs the invalid route path for debugging or analytics
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
+  }, [location.pathname]); // Runs every time the path changes
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">

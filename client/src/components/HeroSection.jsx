@@ -81,9 +81,13 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
     }
   };
 
+  // Index to track which background image is currently displayed
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
+
+   // Array of slideshow images
   const backgrounds = [heroBg1, heroBg2, heroBg3];
 
+  // Switch background every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBgIndex((prev) => (prev + 1) % backgrounds.length);
@@ -119,43 +123,16 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
             future.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              variant="hero"
-              size="xl"
-              // onClick={onUploadClick}
-              className="w-full sm:w-auto animate-scale-in"
-              style={{ animationDelay: "0.2s" }}
-            >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-                id="ecoFileInput"
-              />
-
-              <label
-                htmlFor="ecoFileInput"
-                className="cursor-pointer px-4 py-2 rounded-lg shadow-md
-                   text-[hsl(var(--primary-foreground))] 
-                   bg-[hsl(var(--primary))] 
-                   hover:bg-[hsl(var(--primary-hover))] 
-                   transition"
-              >
-                Choose Photo
-              </label>
+          <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
+            {/* Upload Image Button */}
+            <Button variant="hero" size="xl" onClick={onUploadClick} className="w-full sm:w-auto animate-scale-in" style={{ animationDelay: '0.2s' }}>
+              <Upload className='h-6 w-6' />
+              Upload Photo
             </Button>
 
-            <Button
-              variant="hero"
-              size="xl"
-              onClick={onCameraClick}
-              className="w-full sm:w-auto animate-scale-in"
-              style={{ animationDelay: "0.4s" }}
-            >
-              <Camera className="h-6 w-6" />
+            {/* Take Photo with Camera Button */}
+            <Button variant="hero" size="xl" onClick={onCameraClick} className="w-full sm:w-auto animate-scale-in" style={{ animationDelay: '0.4s' }}>
+              <Camera className='h-6 w-6' />
               Take Photo
             </Button>
             {popupImage && (

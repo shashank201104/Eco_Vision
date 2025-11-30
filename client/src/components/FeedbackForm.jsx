@@ -1,4 +1,5 @@
 //Author - Pratham Khare
+
 import React, { useState } from 'react';
 import { Button } from './ui/Button.jsx';
 import { Input } from './ui/Input.jsx';
@@ -10,12 +11,16 @@ import { Send, Star } from 'lucide-react';
 
 const FeedbackForm = () => {
 
+  // Form state: name and feedback text input
   const [name, setName] = useState('');
   const [feedback, setFeedback] = useState('');
   const [rating, setRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Toast function to show success / error notifications
   const { toast } = useToast();
 
+   // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -56,7 +61,9 @@ const FeedbackForm = () => {
       setRating(0);
 
     } catch (error) {
+      // Handle request failure
       console.error(error);
+
       toast({
         title: "Submission failed",
         description: "Please try again later.",
@@ -68,6 +75,7 @@ const FeedbackForm = () => {
   };
 
   return (
+    // Section heading
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="container mx-auto max-w-2xl">
         <div className="text-center mb-12">
@@ -79,6 +87,7 @@ const FeedbackForm = () => {
           </p>
         </div>
 
+        {/*Feedback form card*/}
         <Card className="shadow-medium border-0 bg-card">
           <CardHeader>
             <CardTitle className="text-center text-xl text-foreground">
@@ -87,6 +96,7 @@ const FeedbackForm = () => {
           </CardHeader>
 
           <CardContent>
+            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-6">
 
               {/* Name */}
@@ -103,7 +113,7 @@ const FeedbackForm = () => {
                 />
               </div>
 
-              {/* Feedback */}
+              {/* Feedback textarea */}
               <div className="space-y-2">
                 <Label htmlFor="feedback" className="text-foreground font-medium">Your Feedback</Label>
                 <Textarea

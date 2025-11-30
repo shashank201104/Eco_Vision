@@ -49,6 +49,7 @@ const UserTestimonials = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
   };
 
+  // Move to previous testimonial (wraps around)
   const prevTestimonial = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
@@ -65,6 +66,8 @@ const UserTestimonials = () => {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/50">
       <div className="container mx-auto max-w-4xl">
+
+        {/* Section Heading */}
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             What Our Users Say
@@ -74,6 +77,7 @@ const UserTestimonials = () => {
           </p>
         </div>
 
+        {/* Testimonial Card */}
         <div className="relative">
           <Card className="shadow-medium border-0 bg-card/80 backdrop-blur-sm">
             <CardContent className="p-8 sm:p-12">
