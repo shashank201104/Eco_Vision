@@ -1,0 +1,21 @@
+{
+  "name": "eco_vision",
+  "version": "1.0.0",
+  "description": "Eco Vision is a project dedicated to promoting sustainability and environmental awareness using modern technology. This repository contains the source code and resources for Eco Vision, an initiative that leverages machine learning and data-driven approaches to help users make eco-friendly decisions and track environmental impact.",
+  "main": "index.js",
+  "scripts": {
+    "build":"npm install --prefix server && npm install --prefix client && npm run build --prefix client",
+    "start":"npm run start --prefix server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shashank201104/Eco_Vision.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shashank201104/Eco_Vision/issues"
+  },
+  "homepage": "https://github.com/shashank201104/Eco_Vision#readme"
+}
