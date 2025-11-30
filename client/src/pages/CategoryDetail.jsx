@@ -1,4 +1,6 @@
 //Author - Pratham Khare
+
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button.jsx';
@@ -116,7 +118,11 @@ const categoryData = {
 };
 
 const CategoryDetail = () => {
+
+  //Retrieves the dynamic categoryId parameter from the URL.
   const { categoryId } = useParams();
+
+  // Match the categoryId with data object
   const category = categoryId ? categoryData[categoryId] : null;
 
   const handleAuthClick = () => {
@@ -124,6 +130,7 @@ const CategoryDetail = () => {
   };
 
   
+  //If the category doesn't exist, show a fallback "Category not found" page
   if (!category) {
     return (
       <div className="min-h-screen bg-background">
@@ -142,7 +149,7 @@ const CategoryDetail = () => {
     <div className="min-h-screen bg-background">
       <Header onAuthClick={handleAuthClick} />
 
-      {/* Hero Section */}
+      {/*/Category Main Information Section*/}
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           <div className="flex items-center mb-8">
@@ -163,6 +170,7 @@ const CategoryDetail = () => {
                 {category.description}
               </p>
 
+              {/* Quick Stats: Carbon Footprint + Recycling Rate */}
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <Card className="text-center p-4">
                   <CardContent className="p-0">
@@ -181,6 +189,7 @@ const CategoryDetail = () => {
               </div>
             </div>
 
+            {/* Category Image */}
             <div>
               <img
                 src={category.image}
@@ -202,6 +211,8 @@ const CategoryDetail = () => {
                 <span>Recycling Tips</span>
               </CardTitle>
             </CardHeader>
+
+             {/* Tips List */}
             <CardContent>
               <ul className="space-y-4">
                 {category.tips.map((tip, index) => (
@@ -218,13 +229,14 @@ const CategoryDetail = () => {
         </div>
       </section>
 
-      {/* Environmental Impact */}
+      {/* Environmental Impact Section*/}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-3xl font-bold text-center text-foreground mb-12">
             Environmental Impact
           </h2>
 
+          {/* Highlighted Impact Card */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="shadow-medium border-0 bg-eco-green text-black">
               <CardContent className="p-8 text-center">
@@ -234,6 +246,7 @@ const CategoryDetail = () => {
               </CardContent>
             </Card>
 
+            {/* Interesting Facts List */}
             <Card className="shadow-medium border-0">
               <CardHeader>
                 <CardTitle>Key Facts</CardTitle>
@@ -253,6 +266,7 @@ const CategoryDetail = () => {
         </div>
       </section>
 
+       {/* Footer */}
       <Footer />
     </div>
   );

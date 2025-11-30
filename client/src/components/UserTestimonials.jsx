@@ -1,4 +1,5 @@
 //Author - Pratham Khare
+
 import React, { useState } from 'react';
 import { Card, CardContent } from './ui/Card.jsx';
 import { Button } from './ui/Button.jsx';
@@ -48,21 +49,28 @@ const testimonials = [
 ];
 
 const UserTestimonials = () => {
+
+  // Track which testimonial is currently shown
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Move to next testimonial (wraps around)
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
   };
 
+  // Move to previous testimonial (wraps around)
   const prevTestimonial = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  // Current testimonial to display
   const currentTestimonial = testimonials[currentIndex];
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/50">
       <div className="container mx-auto max-w-4xl">
+
+        {/* Section Heading */}
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             What Our Users Say
@@ -72,6 +80,7 @@ const UserTestimonials = () => {
           </p>
         </div>
 
+        {/* Testimonial Card */}
         <div className="relative">
           <Card className="shadow-medium border-0 bg-card/80 backdrop-blur-sm">
             <CardContent className="p-8 sm:p-12">
@@ -137,6 +146,7 @@ const UserTestimonials = () => {
               ))}
             </div>
 
+             {/* Next Button */}
             <Button
               variant="outline"
               size="icon"

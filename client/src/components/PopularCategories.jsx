@@ -1,4 +1,6 @@
 //Author - Pratham Khare
+
+
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import {Card, CardContent} from "./ui/Card.jsx"
@@ -53,6 +55,7 @@ const categories = [
 const PopularCategories = () => {
   const navigate = useNavigate();
 
+  // Handles click on a category card and routes to its category details page
   const handleCategoryClick = (categoryId) => {
     navigate(`/category/${categoryId}`);
   }
@@ -60,6 +63,8 @@ const PopularCategories = () => {
   return (
     <section className='py-16 px-4 sm:px-6 lg:px-8 bg-background'>
       <div className='container mx-auto max-w-7xl'>
+
+        {/* Section Title and Subtitle */}
         <div className='text-center mb-12'>
           <h2 className='text-3xl sm:text-4xl font-bold text-foreground mb-4'>
             Popular Recycling Categories
@@ -68,8 +73,11 @@ const PopularCategories = () => {
             Explore different types of recyclable materials and learn how to make a positive impact on the environment
           </p>
         </div>
+
+        {/* Category Grid Display */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {categories.map((category, index) => (
+            // Each category card is clickable and navigates to detail page
             <Card 
               key={category.id} 
               className="group cursor-pointer hover-lift border-0 shadow-soft hover:shadow-medium transition-all duration-300 overflow-hidden bg-card animate-slide-up"
@@ -77,7 +85,7 @@ const PopularCategories = () => {
               onClick={() => handleCategoryClick(category.id)}
             >
               <CardContent className="p-0 relative h-64">
-  
+                {/* Category Image */}
                   <img 
                     src={category.image} 
                     alt={category.name}

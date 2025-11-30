@@ -9,13 +9,17 @@ import heroBg3 from "../assets/hero-bg-3.jpg"
 
 const HeroSection = ({ onUploadClick, onCameraClick }) => {
 
+  // Index to track which background image is currently displayed
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
+
+   // Array of slideshow images
   const backgrounds = [heroBg1, heroBg2, heroBg3];
 
+  // Switch background every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBgIndex((prev) => (prev + 1) % backgrounds.length);
-    }, 5000); //change background every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -40,11 +44,13 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
           </p>
 
           <div className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
+            {/* Upload Image Button */}
             <Button variant="hero" size="xl" onClick={onUploadClick} className="w-full sm:w-auto animate-scale-in" style={{ animationDelay: '0.2s' }}>
               <Upload className='h-6 w-6' />
               Upload Photo
             </Button>
 
+            {/* Take Photo with Camera Button */}
             <Button variant="hero" size="xl" onClick={onCameraClick} className="w-full sm:w-auto animate-scale-in" style={{ animationDelay: '0.4s' }}>
               <Camera className='h-6 w-6' />
               Take Photo

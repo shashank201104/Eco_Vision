@@ -5,9 +5,12 @@ import { cva } from "class-variance-authority"
 import { cn } from "../../lib/utils.js"
 
 const buttonVariants = cva(
+
+    // Base button styling applied to all variants
     "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
 
     {
+        // Different visual styles the Button can take
         variants: {
             variant: {
                 default:
@@ -44,6 +47,8 @@ const buttonVariants = cva(
                 "icon-lg": "h-14 w-14",
             },
         },
+
+        // Default variant if none is provided
         defaultVariants: {
             variant: "default",
             size: "default",
@@ -51,8 +56,10 @@ const buttonVariants = cva(
     }
 );
 
+// Button Component
 const Button = React.forwardRef(
     ({ className, variant, size, asChild = false, ...props }, ref) => {
+        // If `asChild` is true, render the component passed instead of <button>
         const Comp = asChild ? Slot : "button";
         return (
             <Comp

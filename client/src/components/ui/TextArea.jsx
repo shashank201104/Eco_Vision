@@ -1,6 +1,7 @@
 //Author - Pratham Khare
 import React from "react";
 
+// Reusable textarea component
 const Textarea = React.forwardRef(({ className = "", ...props }, ref) => {
   return (
     <textarea
