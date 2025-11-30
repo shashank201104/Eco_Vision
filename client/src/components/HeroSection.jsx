@@ -1,11 +1,13 @@
 //Author - Pratham Khare, Manish Aggarwal
+
+
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Camera } from "lucide-react";
-import { Button } from "./ui/Button";
 import heroBg1 from "../assets/hero-bg-1.jpg";
 import heroBg2 from "../assets/hero-bg-2.jpg";
 import heroBg3 from "../assets/hero-bg-3.jpg";
+import { useAuthStore } from "../store/useAuthStore";
 import axios from "axios";
 
 const ImagePopup = ({ imageBase64, onClose }) => {
@@ -36,18 +38,21 @@ const ImagePopup = ({ imageBase64, onClose }) => {
   );
 };
 
-const HeroSection = ({ onUploadClick, onCameraClick }) => {
+const HeroSection = () => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [popupImage, setPopupImage] = useState(null);
 
   const fileInputRef = useRef(null);
+  const { authUser } = useAuthStore();
+
+  // CAMERA STATES
+  const videoRef = useRef(null);
+  const [cameraOpen, setCameraOpen] = useState(false);
 
   const handleShowPopup = (data) => {
     if (data && data.AnnotatedImage) {
       setPopupImage(data.AnnotatedImage);
-    } else {
-      console.warn("No AnnotatedImage found in response");
     }
   };
 
@@ -74,10 +79,9 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
             : import.meta.env.VITE_BACKEND_URL
         }/upload`,
         formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
+
       alert("File uploaded successfully!");
       handleShowPopup(res.data);
     } catch (err) {
@@ -89,13 +93,59 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
     }
   };
 
+  // CAMERA FUNCTIONS
+  const startCamera = async () => {
+    setCameraOpen(true);
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (error) {
+      alert("Could not access camera");
+      console.error(error);
+    }
+  };
+
+  const stopCamera = () => {
+    setCameraOpen(false);
+    const stream = videoRef.current?.srcObject;
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
+  };
+
+  const capturePhoto = () => {
+    const video = videoRef.current;
+    const canvas = document.createElement("canvas");
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+
+      const file = new File([blob], "camera.jpg", { type: "image/jpeg" });
+
+      handleUpload(file);
+    }, "image/jpeg");
+
+    stopCamera();
+  };
+
+  // Background slider
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const backgrounds = [heroBg1, heroBg2, heroBg3];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBgIndex((prev) => (prev + 1) % backgrounds.length);
-    }, 5000);
+    const interval = setInterval(
+      () => setCurrentBgIndex((prev) => (prev + 1) % backgrounds.length),
+      5000
+    );
     return () => clearInterval(interval);
   }, []);
 
@@ -111,7 +161,6 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
         />
       ))}
 
-      {/* Content */}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <div className="animate-fade-in">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
@@ -128,44 +177,48 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            {/* Choose Photo Button */}
-            <div
-              className="w-full sm:w-auto animate-scale-in"
-              style={{ animationDelay: "0.2s" }}
-            >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-                id="ecoFileInput"
-              />
+            {authUser && (
+              <>
+                {/* Choose Photo */}
+                <div
+                  className="w-full sm:w-auto animate-scale-in"
+                  style={{ animationDelay: "0.2s" }}
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    id="ecoFileInput"
+                  />
 
-              <label
-                htmlFor="ecoFileInput"
-                className="cursor-pointer px-8 py-3 rounded-full
-      bg-gradient-to-r from-green-500 to-green-600
-      text-white font-semibold text-lg shadow-md hover:shadow-xl
-      transition-all duration-300 flex items-center gap-2"
-              >
-                <Camera className="h-5 w-5 text-white" />
-                Choose Photo
-              </label>
-            </div>
+                  <label
+                    htmlFor="ecoFileInput"
+                    className="cursor-pointer px-8 py-3 rounded-full 
+                      bg-gradient-to-r from-green-500 to-green-600
+                      text-white font-semibold text-lg shadow-md hover:shadow-xl
+                      transition-all duration-300 flex items-center gap-2"
+                  >
+                    <Camera className="h-5 w-5 text-white" />
+                    Choose Photo
+                  </label>
+                </div>
 
-            {/* Take Photo Button */}
-            <button
-              onClick={onCameraClick}
-              className="w-full sm:w-auto animate-scale-in px-8 py-3 rounded-full
-    bg-white text-green-600 font-semibold text-lg
-    shadow-md hover:shadow-xl border border-green-400
-    transition-all duration-300 flex items-center gap-2"
-              style={{ animationDelay: "0.4s" }}
-            >
-              <Camera className="h-5 w-5 text-green-600" />
-              Take Photo
-            </button>
+                {/* Take Photo */}
+                <button
+                  onClick={startCamera}
+                  className="w-full sm:w-auto animate-scale-in px-8 py-3 rounded-full 
+                    bg-white text-green-600 font-semibold text-lg
+                    shadow-md hover:shadow-xl border border-green-400
+                    transition-all duration-300 flex items-center gap-2"
+                  style={{ animationDelay: "0.4s" }}
+                >
+                  <Camera className="h-5 w-5" />
+                  Take Photo
+                </button>
+              </>
+            )}
 
             {popupImage && (
               <ImagePopup
@@ -176,6 +229,36 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
           </div>
         </div>
       </div>
+
+      {/* CAMERA POPUP */}
+      {cameraOpen && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg">
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              className="w-[350px] h-auto rounded-md"
+            ></video>
+
+            <div className="flex justify-center gap-4 mt-4">
+              <button
+                onClick={capturePhoto}
+                className="px-6 py-2 bg-green-600 text-white rounded-full shadow hover:bg-green-700"
+              >
+                Capture
+              </button>
+
+              <button
+                onClick={stopCamera}
+                className="px-6 py-2 bg-red-500 text-white rounded-full shadow hover:bg-red-600"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
