@@ -1,3 +1,4 @@
+ /* Author - Manish Aggarwal */
 
 .card {
   padding: 2rem;
@@ -12,7 +13,7 @@
   position: relative;
   bottom: 0;
   box-shadow: 0 0 0 transparent;
-
+  gap: 15px;
   transition: bottom 0.3s ease, box-shadow 0.3s ease;
 }
 
