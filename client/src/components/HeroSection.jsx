@@ -7,9 +7,7 @@ import heroBg1 from "../assets/hero-bg-1.jpg";
 import heroBg2 from "../assets/hero-bg-2.jpg";
 import heroBg3 from "../assets/hero-bg-3.jpg";
 import axios from "axios";
-
-// ⭐ Step 1: Toast added
-import toast, { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast"; // Step 1
 
 const ImagePopup = ({ imageBase64, onClose }) => {
   if (!imageBase64) return null;
@@ -41,20 +39,16 @@ const ImagePopup = ({ imageBase64, onClose }) => {
 
 const HeroSection = () => {
   const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(false); // Step 2
   const [popupImage, setPopupImage] = useState(null);
+  const [cameraOpen, setCameraOpen] = useState(false); // Step 3
 
+  const videoRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  // ⭐ Step 3: Camera state
-  const videoRef = useRef(null);
-  const [cameraOpen, setCameraOpen] = useState(false);
-
   const handleShowPopup = (data) => {
-    if (data && data.AnnotatedImage) {
+    if (data?.AnnotatedImage) {
       setPopupImage(data.AnnotatedImage);
-    } else {
-      console.warn("No AnnotatedImage found in response");
     }
   };
 
@@ -67,7 +61,6 @@ const HeroSection = () => {
     }
   };
 
-  // ⭐ Step 1: Alerts → Toast
   const handleUpload = async (fileToUpload) => {
     if (!fileToUpload) return toast.error("Please select a file first");
 
@@ -89,31 +82,26 @@ const HeroSection = () => {
       handleShowPopup(res.data);
 
     } catch (err) {
-      console.error("Upload error:", err);
       toast.error("Upload failed!");
-
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
 
-  // ⭐ Step 3: Start Camera Stream
+  // OPEN CAMERA
   const startCamera = async () => {
     setCameraOpen(true);
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    } catch (error) {
+      if (videoRef.current) videoRef.current.srcObject = stream;
+    } catch (err) {
       toast.error("Unable to access camera");
-      console.error(error);
     }
   };
 
-  // ⭐ Step 3: Stop Camera Stream
+  // STOP CAMERA
   const stopCamera = () => {
     setCameraOpen(false);
 
@@ -121,7 +109,7 @@ const HeroSection = () => {
     if (stream) stream.getTracks().forEach((track) => track.stop());
   };
 
-  // ⭐ Step 3: Capture Photo
+  // CAPTURE PHOTO
   const capturePhoto = () => {
     const video = videoRef.current;
     const canvas = document.createElement("canvas");
@@ -129,17 +117,15 @@ const HeroSection = () => {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
 
     canvas.toBlob((blob) => {
       if (!blob) return;
 
       const file = new File([blob], "camera.jpg", { type: "image/jpeg" });
-
       setUploading(true);
       handleUpload(file);
-    }, "image/jpeg");
+    });
 
     stopCamera();
   };
@@ -157,95 +143,87 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* ⭐ Toast Container */}
       <Toaster position="top-right" />
 
-      {/* ⭐ Step 2: Uploading Loader */}
+      {/* Step 2: Upload Loader */}
       {uploading && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-[9999]">
           <div className="w-12 h-12 border-4 border-white border-t-green-500 rounded-full animate-spin"></div>
-          <p className="text-white mt-4 text-lg font-semibold tracking-wide">
-            Uploading...
-          </p>
+          <p className="text-white mt-4 text-lg font-semibold">Uploading...</p>
         </div>
       )}
 
-      {backgrounds.map((bg, index) => (
+      {/* BACKGROUNDS */}
+      {backgrounds.map((bg, i) => (
         <div
-          key={index}
+          key={i}
           className={`absolute inset-0 hero-bg-hero transition-opacity duration-1000 ${
-            index === currentBgIndex ? "opacity-100" : "opacity-0"
+            i === currentBgIndex ? "opacity-100" : "opacity-0"
           }`}
           style={{ backgroundImage: `url(${bg})` }}
         />
       ))}
 
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div className="animate-fade-in">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Transform Your
-            <span className="block text-white-500 bg-clip-text">
-              Recycling Journey
-            </span>
-          </h1>
+      {/* MAIN CONTENT */}
+      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <h1 className="text-5xl sm:text-6xl font-bold text-white mb-6">
+          Transform Your
+          <span className="block">Recycling Journey</span>
+        </h1>
 
-          <p className="text-xl sm:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
-            AI-powered detection to identify recyclable items, calculate carbon footprint,
-            and provide personalized recycling tips for a sustainable future.
-          </p>
+        <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          AI-powered detection to identify recyclable items, calculate carbon footprint,
+          and provide personalized recycling tips.
+        </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        {/* BUTTONS (FILE 1 STYLE) */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
 
-            {/* File Upload */}
-            <Button
-              variant="hero"
-              size="xl"
-              className="w-full sm:w-auto animate-scale-in"
-              style={{ animationDelay: "0.2s" }}
+          {/* Choose Photo Button */}
+          <div className="w-full sm:w-auto">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+              id="ecoFileInput"
+            />
+
+            <label
+              htmlFor="ecoFileInput"
+              className="cursor-pointer px-8 py-3 rounded-full 
+                bg-gradient-to-r from-green-500 to-green-600
+                text-white font-semibold text-lg shadow-md hover:shadow-xl
+                transition-all duration-300 flex items-center gap-2"
             >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-                id="ecoFileInput"
-              />
-              <label
-                htmlFor="ecoFileInput"
-                className="cursor-pointer px-4 py-2 rounded-lg shadow-md
-                  text-[hsl(var(--primary-foreground))]
-                  bg-[hsl(var(--primary))]
-                  hover:bg-[hsl(var(--primary-hover))]
-                  transition"
-              >
-                Choose Photo
-              </label>
-            </Button>
-
-            {/* ⭐ Step 3: Camera */}
-            <Button
-              variant="hero"
-              size="xl"
-              onClick={startCamera}
-              className="w-full sm:w-auto animate-scale-in"
-              style={{ animationDelay: "0.4s" }}
-            >
-              <Camera className="h-6 w-6" />
-              Take Photo
-            </Button>
-
-            {popupImage && (
-              <ImagePopup
-                imageBase64={popupImage}
-                onClose={() => setPopupImage(null)}
-              />
-            )}
+              <Camera className="h-5 w-5 text-white" />
+              Choose Photo
+            </label>
           </div>
+
+          {/* Take Photo Button */}
+          <button
+            onClick={startCamera}
+            className="w-full sm:w-auto px-8 py-3 rounded-full 
+              bg-white text-green-600 font-semibold text-lg
+              shadow-md hover:shadow-xl border border-green-400
+              transition-all duration-300 flex items-center gap-2"
+          >
+            <Camera className="h-5 w-5" />
+            Take Photo
+          </button>
         </div>
+
+        {popupImage && (
+          <ImagePopup
+            imageBase64={popupImage}
+            onClose={() => setPopupImage(null)}
+          />
+        )}
       </div>
 
-      {/* ⭐ Step 3: Camera Popup */}
+      {/* CAMERA POPUP */}
       {cameraOpen && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg shadow-lg">
