@@ -8,7 +8,7 @@ import heroBg2 from "../assets/hero-bg-2.jpg";
 import heroBg3 from "../assets/hero-bg-3.jpg";
 import axios from "axios";
 
-// ⭐ Toast import added
+// ⭐ Step 1: Toast added
 import toast, { Toaster } from "react-hot-toast";
 
 const ImagePopup = ({ imageBase64, onClose }) => {
@@ -41,7 +41,7 @@ const ImagePopup = ({ imageBase64, onClose }) => {
 
 const HeroSection = ({ onUploadClick, onCameraClick }) => {
   const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(false); // Step 2 loader state
   const [popupImage, setPopupImage] = useState(null);
 
   const fileInputRef = useRef(null);
@@ -63,7 +63,7 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
     }
   };
 
-  // ⭐ All alerts converted to toast
+  // ⭐ Step 1: All alerts replaced with toast
   const handleUpload = async (fileToUpload) => {
     if (!fileToUpload) return toast.error("Please select a file first");
 
@@ -85,11 +85,9 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
 
       toast.success("File uploaded successfully!");
       handleShowPopup(res.data);
-
     } catch (err) {
       console.error("Upload error:", err);
       toast.error("Upload failed!");
-
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -109,8 +107,18 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* ⭐ Toast container */}
+      {/* ⭐ Step 1: Toast container */}
       <Toaster position="top-right" />
+
+      {/* ⭐ Step 2: Uploading Loader Overlay */}
+      {uploading && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-[9999]">
+          <div className="w-12 h-12 border-4 border-white border-t-green-500 rounded-full animate-spin"></div>
+          <p className="text-white mt-4 text-lg font-semibold tracking-wide">
+            Uploading...
+          </p>
+        </div>
+      )}
 
       {backgrounds.map((bg, index) => (
         <div
