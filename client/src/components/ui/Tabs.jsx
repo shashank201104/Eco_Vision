@@ -1,11 +1,12 @@
+//Author - Pratham Khare
 import React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { cn } from "../../lib/utils.js";
 
-// Root Tabs container
+// Tabs: Root container that manages active tab state.
 const Tabs = TabsPrimitive.Root;
 
-// Tab header group container
+// TabsList: Wrapper that holds all tab trigger buttons.
 const TabsList = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
@@ -18,7 +19,7 @@ const TabsList = React.forwardRef(({ className, ...props }, ref) => (
 ));
 TabsList.displayName = TabsPrimitive.List.displayName;
 
-// Individual tab button
+// TabsTrigger: A clickable tab button that activates its corresponding content.
 const TabsTrigger = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
@@ -31,7 +32,7 @@ const TabsTrigger = React.forwardRef(({ className, ...props }, ref) => (
 ));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
-// Tab content panel (renders the content of active tab)
+// TabsContent: The content panel that shows when its tab is active.
 const TabsContent = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}

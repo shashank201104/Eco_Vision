@@ -1,3 +1,4 @@
+//Author - Pratham Khare
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent } from './Card';
@@ -401,6 +402,7 @@ const categoryColors = {
     Metal: 'bg-muted',
 };
 
+// DriveDetail: Displays detailed information for a selected drive.
 const DriveDetail = () => {
     const { driveId } = useParams();
     const navigate = useNavigate();
@@ -408,6 +410,7 @@ const DriveDetail = () => {
 
     const drive = drivesData[driveId];
 
+    // If no drive is found, show 404 section.
     if (!drive) {
         return (
             <div className="min-h-screen flex flex-col bg-background">
