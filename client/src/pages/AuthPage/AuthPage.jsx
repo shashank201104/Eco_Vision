@@ -1,18 +1,27 @@
 import { Button } from "../../components/ui/Button";
 import { useAuthPage } from "./useAuthPage";
 
+// AuthPage Component
+// -------------------
+// This component handles Login & Signup UI.
+// It switches between tabs, shows form fields,
+// displays validation messages, and triggers auth actions.
+
 export default function AuthPage() {
+
+   // Custom hook containing all logic for form handling, validation, and API integration
+ 
  const {
-    activeTab,
-    formData,
-    errors,
-    message,
-    isSigningUp,
-    isLoggingIn,
-    handleChange,
-    handleSubmit,
-    switchTab,
-  } = useAuthPage();
+    activeTab,   // Current selected tab: "login" or "signup"
+    formData,    // Form input values
+    errors,      // Validation error messages
+    message,    // Global success/error/info messages
+    isSigningUp,  // Loading state for signup
+    isLoggingIn,   // Loading state for login
+    handleChange,  // Updates form field values
+    handleSubmit,   // Handles form submission
+    switchTab,      // Switches between login and signup tabs
+  } = useAuthPage();   
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-4 mt-8">
