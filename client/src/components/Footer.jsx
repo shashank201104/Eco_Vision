@@ -8,12 +8,12 @@ const Footer = () => {
   const teamMembers = [
     {
       name: "Pratham Khare",
-      role: "Frontend and Backend",
+      role: "Frontend",
       linkedin: "https://linkedin.com/in/pratham",
     },
     {
       name: "Manish Aggarwal",
-      role: "Frontend and Model Training",
+      role: "Frontend",
       linkedin: "https://linkedin.com/in/manish",
     },
     {
