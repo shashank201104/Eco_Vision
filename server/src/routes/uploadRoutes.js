@@ -51,7 +51,7 @@ router.post("/", upload.single("file"), async (req, res) => {
     const itemResponse = await axios.get(
       `${baseUrl}/items/${detectedClass}`
     );
-
+    console.log("Item response data:", itemResponse.data);
     res.json({
         itemData: itemResponse.data,
         AnnotatedImage: response.data.annotated_image,
