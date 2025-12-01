@@ -23,12 +23,12 @@ const Footer = () => {
     },
     {
       name: "Shivansh Gupta",
-      role: "Ai Developer",
+      role: "ML & Backend Developer",
       linkedin: "https://linkedin.com/in/shivansh",
     },
     {
       name: "Ansh Mishra",
-      role: "Ui Designer",
+      role: "Figma & Frontend",
       linkedin: "https://linkedin.com/in/ansh",
     },
   ];

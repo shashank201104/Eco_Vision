@@ -108,6 +108,9 @@ const Drives = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('All');
 
+  // Added state for popup
+  const [showComingSoon, setShowComingSoon] = useState(false);
+
   const filteredDrives = selectedCategory === 'All' 
     ? drives 
     : drives.filter(drive => drive.categories.includes(selectedCategory));
@@ -128,9 +131,14 @@ const Drives = () => {
               <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4 animate-fade-in">
                 Explore Recycling Drives
               </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                Opportunities that are creating a buzz among eco-conscious citizens
-              </p>
+
+              {/*Add Drive Button*/}
+              <button
+                onClick={() => setShowComingSoon(true)}
+                className="mt-4 px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition"
+              >
+                Add Drive
+              </button>
             </div>
           </div>
         </section>
@@ -197,22 +205,18 @@ const Drives = () => {
 
                     {/* Content Section */}
                     <div className="p-5">
-                      {/* Title */}
                       <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                         {drive.title}
                       </h3>
 
-                      {/* Organizer */}
                       <p className="text-sm text-muted-foreground mb-3">
                         Organized by <span className="font-semibold text-foreground">{drive.organizer}</span>
                       </p>
 
-                      {/* Description */}
                       <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                         {drive.description}
                       </p>
 
-                      {/* Info Grid */}
                       <div className="space-y-2 mb-4">
                         <div className="flex items-center text-sm text-muted-foreground">
                           <Calendar className="w-4 h-4 mr-2 text-primary" />
@@ -230,7 +234,6 @@ const Drives = () => {
                         </div>
                       </div>
 
-                      {/* CTA Button */}
                       <Button 
                         variant="outline" 
                         className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300"
@@ -251,6 +254,25 @@ const Drives = () => {
             )}
           </div>
         </section>
+
+        {/* COMING SOON POPUP */}
+        {showComingSoon && (
+          <div
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50"
+            onClick={() => setShowComingSoon(false)}
+          >
+            <div
+              className="bg-white rounded-xl shadow-xl p-8 w-80 text-center animate-fade-in"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-2xl font-bold text-foreground mb-3">Coming Soon!</h2>
+              <Button onClick={() => setShowComingSoon(false)} className="w-full">
+                Close
+              </Button>
+            </div>
+          </div>
+        )}
+
       </main>
 
       <Footer />
