@@ -1,12 +1,15 @@
 //Author - Pratham Khare
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { Camera, Divide, Upload } from "lucide-react";
+import { Camera } from "lucide-react";
 import { Button } from "./ui/Button";
 import heroBg1 from "../assets/hero-bg-1.jpg";
 import heroBg2 from "../assets/hero-bg-2.jpg";
 import heroBg3 from "../assets/hero-bg-3.jpg";
 import axios from "axios";
+
+// ⭐ Toast import added
+import toast, { Toaster } from "react-hot-toast";
 
 const ImagePopup = ({ imageBase64, onClose }) => {
   if (!imageBase64) return null;
@@ -14,11 +17,11 @@ const ImagePopup = ({ imageBase64, onClose }) => {
   return (
     <div
       className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-      onClick={onClose} // close when clicking outside
+      onClick={onClose}
     >
       <div
         className="bg-white rounded-lg overflow-hidden shadow-lg max-w-lg w-full p-4"
-        onClick={(e) => e.stopPropagation()} // prevent closing when clicking on modal
+        onClick={(e) => e.stopPropagation()}
       >
         <img
           src={`data:image/jpeg;base64,${imageBase64}`}
@@ -60,21 +63,33 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
     }
   };
 
+  // ⭐ All alerts converted to toast
   const handleUpload = async (fileToUpload) => {
-    if (!fileToUpload) return alert("Please select a file first");
+    if (!fileToUpload) return toast.error("Please select a file first");
 
     const formData = new FormData();
     formData.append("file", fileToUpload);
 
     try {
-      const res = await axios.post(`${import.meta.env.MODE==="development"?"http://localhost:5000":import.meta.env.VITE_BACKEND_URL}/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      alert("File uploaded successfully!");
+      const res = await axios.post(
+        `${
+          import.meta.env.MODE === "development"
+            ? "http://localhost:5000"
+            : import.meta.env.VITE_BACKEND_URL
+        }/upload`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      toast.success("File uploaded successfully!");
       handleShowPopup(res.data);
+
     } catch (err) {
       console.error("Upload error:", err);
-      alert("Upload failed!");
+      toast.error("Upload failed!");
+
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -93,6 +108,10 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+
+      {/* ⭐ Toast container */}
+      <Toaster position="top-right" />
+
       {backgrounds.map((bg, index) => (
         <div
           key={index}
@@ -103,7 +122,6 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
         />
       ))}
 
-      {/*Content*/}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <div className="animate-fade-in">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
@@ -115,15 +133,14 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
 
           <p className="text-xl sm:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
             AI-powered detection to identify recyclable items, calculate carbon
-            footprint, and provide personalized recycling tips for a sustainable
-            future.
+            footprint, and provide personalized recycling tips for a sustainable future.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+
             <Button
               variant="hero"
               size="xl"
-              // onClick={onUploadClick}
               className="w-full sm:w-auto animate-scale-in"
               style={{ animationDelay: "0.2s" }}
             >
@@ -139,9 +156,9 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
               <label
                 htmlFor="ecoFileInput"
                 className="cursor-pointer px-4 py-2 rounded-lg shadow-md
-                   text-[hsl(var(--primary-foreground))] 
-                   bg-[hsl(var(--primary))] 
-                   hover:bg-[hsl(var(--primary-hover))] 
+                   text-[hsl(var(--primary-foreground))]
+                   bg-[hsl(var(--primary))]
+                   hover:bg-[hsl(var(--primary-hover))]
                    transition"
               >
                 Choose Photo
@@ -158,14 +175,14 @@ const HeroSection = ({ onUploadClick, onCameraClick }) => {
               <Camera className="h-6 w-6" />
               Take Photo
             </Button>
+
             {popupImage && (
               <ImagePopup
                 imageBase64={popupImage}
-                onClose={() => {
-                  setPopupImage(null);
-                }}
+                onClose={() => setPopupImage(null)}
               />
             )}
+
           </div>
         </div>
       </div>
