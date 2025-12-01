@@ -102,15 +102,20 @@ const categoryColors = {
   Metal: 'bg-muted',
 };
 
+// Filter options: list of categories shown at the top.
 const allCategories = ['All', 'Plastic', 'Electronics', 'Paper', 'Glass', 'Metal'];
 
+// Drives Component: displays all drives, filters, and popup modal.
 const Drives = () => {
   const navigate = useNavigate();
+
+  // Selected category state: stores which filter is active.
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  // Added state for popup
+  // Popup state: controls display of "Coming Soon" modal.
   const [showComingSoon, setShowComingSoon] = useState(false);
 
+  // Filtered drives: recalculates based on selected category.
   const filteredDrives = selectedCategory === 'All' 
     ? drives 
     : drives.filter(drive => drive.categories.includes(selectedCategory));

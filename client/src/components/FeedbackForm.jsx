@@ -8,6 +8,7 @@ import { Label } from './ui/Label.jsx';
 import { useToast } from '../hooks/use-toast.js';
 import { Send, Star } from 'lucide-react';
 
+// FeedbackForm: User feedback submission form with rating, validation & toast alerts.
 const FeedbackForm = () => {
 
   const [name, setName] = useState('');
@@ -16,6 +17,7 @@ const FeedbackForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
+  // handleSubmit: validates fields and sends feedback to backend API.
   const handleSubmit = async (e) => {
     e.preventDefault();
 

@@ -1,7 +1,9 @@
+//Author - Pratham Khare
 import React from "react";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 import { cn } from "../../lib/utils.js";
 
+// Separator: A styled horizontal or vertical dividing line.
 const Separator = React.forwardRef(({ className, orientation = "horizontal", decorative = true, ...props }, ref) => (
   <SeparatorPrimitive.Root
     ref={ref}
