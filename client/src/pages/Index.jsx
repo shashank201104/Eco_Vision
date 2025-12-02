@@ -21,7 +21,6 @@ const Index = () => {
   };
 
   const handleUploadClick = () => {
-    console.log("rfdceds");
 
     toast({
       title: "Upload feature coming soon!",

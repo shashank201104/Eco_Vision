@@ -58,7 +58,7 @@ router.post("/", upload.single("file"), async (req, res) => {
     // Fetch item details from your Express backend
     const baseUrl = `${req.protocol}://${req.get("host")}`;
 
-    console.log("Detected classes:", detectedClasses);
+    // console.log("Detected classes:", detectedClasses);
     // const itemResponse = await axios.get(`${baseUrl}/items/${detectedClass}`);
     const itemResponses = await Promise.all(
       detectedClasses.map(async (detection) => {
@@ -72,7 +72,7 @@ router.post("/", upload.single("file"), async (req, res) => {
       })
     );
 
-    console.log("Item response data:", itemResponses.data);
+    // console.log("Item response data:", itemResponses.data);
 
     res.json({
       itemData: itemResponses,
