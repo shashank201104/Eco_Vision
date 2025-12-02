@@ -9,7 +9,7 @@ import heroBg3 from "../assets/hero-bg-3.jpg";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
-// ⭐ TABLE VERSION POPUP WITH CONFIDENCE COLORS
+//  TABLE VERSION POPUP WITH CONFIDENCE COLORS
 const ImagePopup = ({ imageBase64, itemData, onClose }) => {
   if (!imageBase64) return null;
 
@@ -112,13 +112,13 @@ const HeroSection = () => {
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  // 🟢 Set popup data
+  //  Set popup data
   const handleShowPopup = (data) => {
     setPopupImage(data.AnnotatedImage);
     setItemData(data.itemData || []);
   };
 
-  // 🟢 File change
+  //  File change
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -127,7 +127,7 @@ const HeroSection = () => {
     }
   };
 
-  // 🟢 Upload logic (unchanged)
+  //  Upload logic (unchanged)
   const handleUpload = async (file) => {
     if (!file) return toast.error("Please select a file first");
 
@@ -155,26 +155,40 @@ const HeroSection = () => {
     }
   };
 
-  // 🟢 Camera start
+  //  ✅ UPDATED CAMERA START — BACK CAMERA ON MOBILE, FRONT ON LAPTOP
   const startCamera = async () => {
     setCameraOpen(true);
 
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const constraints = {
+        video: {
+          facingMode: { ideal: "environment" }  // BACK camera on mobile
+        },
+      };
+
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       videoRef.current.srcObject = stream;
-    } catch {
+    } catch (err) {
       toast.error("Camera access denied");
+
+      // fallback
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        videoRef.current.srcObject = stream;
+      } catch {
+        toast.error("Unable to start camera");
+      }
     }
   };
 
-  // 🟢 Camera stop
+  //  Camera stop
   const stopCamera = () => {
     setCameraOpen(false);
     const stream = videoRef.current?.srcObject;
     stream?.getTracks().forEach((t) => t.stop());
   };
 
-  // 🟢 Capture from camera
+  //  Capture from camera
   const capturePhoto = () => {
     const video = videoRef.current;
     const canvas = document.createElement("canvas");
@@ -193,7 +207,7 @@ const HeroSection = () => {
     stopCamera();
   };
 
-  // 🟢 Background slideshow
+  //  Background slideshow
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const backgrounds = [heroBg1, heroBg2, heroBg3];
 
