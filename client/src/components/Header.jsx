@@ -129,6 +129,13 @@ const Header = () => {
           <div className="md:hidden py-4 border-t border-border">
             <nav className="flex flex-col space-y-4">
               <Link
+                to="/nearby"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Nearby recycling centres
+              </Link>
+              <Link
                 to="/about"
                 className="text-foreground hover:text-primary transition-colors font-medium px-2"
                 onClick={() => setIsMenuOpen(false)}
