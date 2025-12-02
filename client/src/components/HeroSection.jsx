@@ -1,4 +1,5 @@
 //Author - Pratham Khare, Manish Aggarwal, Shashank
+
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Camera } from "lucide-react";
@@ -54,27 +55,38 @@ const ImagePopup = ({ imageBase64, itemData, onClose }) => {
             </thead>
 
             <tbody>
-              {itemData?.map((item, idx) => (
-                <tr key={idx} className="border-b hover:bg-gray-50">
-                  <td className="p-3 font-medium capitalize">{item.name}</td>
-
-                  <td className="p-3">{item.carbon_Footprint}</td>
-
+              {itemData?.length === 0 ? (
+                <tr>
                   <td
-                    className={`p-3 ${getConfidenceColor(
-                      item.confidence.percent
-                    )}`}
+                    colSpan="5"
+                    className="p-5 text-center text-red-600 font-semibold text-lg"
                   >
-                    {item.confidence.percent.toFixed(1)}%
-                  </td>
-
-                  <td className="p-3">{item.shelf_Life}</td>
-
-                  <td className="p-3 max-w-[240px] whitespace-normal">
-                    {item.recycle_Tips}
+                    No items detected
                   </td>
                 </tr>
-              ))}
+              ) : (
+                itemData?.map((item, idx) => (
+                  <tr key={idx} className="border-b hover:bg-gray-50">
+                    <td className="p-3 font-medium capitalize">{item.name}</td>
+
+                    <td className="p-3">{item.carbon_Footprint}</td>
+
+                    <td
+                      className={`p-3 ${getConfidenceColor(
+                        item.confidence.percent
+                      )}`}
+                    >
+                      {item.confidence.percent.toFixed(1)}%
+                    </td>
+
+                    <td className="p-3">{item.shelf_Life}</td>
+
+                    <td className="p-3 max-w-[240px] whitespace-normal">
+                      {item.recycle_Tips}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
@@ -207,15 +219,14 @@ const HeroSection = () => {
 
       {/* Background */}
       {backgrounds.map((bg, index) => (
-  <div
-    key={index}
-    className={`absolute inset-0 hero-bg-hero transition-opacity duration-1000 ${
-      index === currentBgIndex ? "opacity-100" : "opacity-0"
-    }`}
-    style={{ backgroundImage: `url(${bg})` }}
-  />
-))}
-
+        <div
+          key={index}
+          className={`absolute inset-0 hero-bg-hero transition-opacity duration-1000 ${
+            index === currentBgIndex ? "opacity-100" : "opacity-0"
+          }`}
+          style={{ backgroundImage: `url(${bg})` }}
+        />
+      ))}
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">

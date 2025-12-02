@@ -8,17 +8,18 @@ import Index from "./pages/Index.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Layout from "./pages/Layout.jsx";
 import AuthPage from "./pages/AuthPage/AuthPage.jsx";
-
+import Nearby from "./pages/Nearby.jsx";
 
 const App = () => {
   return (
     <Router>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Index />} />
           <Route path="about" element={<About />} />
           <Route path="auth" element={<AuthPage />} />
+          <Route path="nearby" element={<Nearby />} />
         </Route>
         <Route path="/category/:categoryId" element={<CategoryDetail />} />
         <Route path="/drives" element={<Drives />} />

@@ -1,3 +1,5 @@
+// Author - Manish Aggarwal
+
 import styles from "./TeamMemberCard.module.css";
 
 const TeamMemberCard = ({ image, name, role, bio }) => {

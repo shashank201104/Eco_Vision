@@ -1,3 +1,4 @@
+// Author - Manish Aggarwal
 import React from "react";
 import styles from "./About.module.css";
 import { Link } from "react-router-dom";
@@ -5,34 +6,34 @@ import { Link } from "react-router-dom";
 import TeamMemberCard from "../../components/TeamMemberCard/TeamMemberCard";
 const team = [
   {
-    name: "Alex Johnson",
-    role: "CEO & Founder",
-    bio: "Environmental engineer with 10+ years of experience in sustainability. Passionate about leveraging technology to solve climate challenges and create a greener future for all.",
-    image: "/assets/TeamMembers/ecoVisionLogo.png",
+    name: "Pratham Khare",
+    role: "Frontend",
+    bio: "Passionate frontend developer focused on building clean, modern and accessible user interfaces with React and modern web technologies.",
+    image: "/assets/TeamMembers/pratham.png",
   },
   {
-    name: "Alex Johnson",
-    role: "CEO & Founder",
-    bio: "Environmental engineer with 10+ years of experience in sustainability. Passionate about leveraging technology to solve climate challenges and create a greener future for all.",
-    image: "/assets/TeamMembers/ecoVisionLogo.png",
+    name: "Shashank",
+    role: "Backend",
+    bio: "Backend specialist with experience in Node.js, Express, and scalable API design. Strong focus on system architecture and performance.",
+    image: "/assets/TeamMembers/shashank.png",
   },
   {
-    name: "Alex Johnson",
-    role: "CEO & Founder",
-    bio: "Environmental engineer with 10+ years of experience in sustainability. Passionate about leveraging technology to solve climate challenges and create a greener future for all.",
-    image: "/assets/TeamMembers/ecoVisionLogo.png",
+    name: "Shivansh Gupta",
+    role: "ML & Backend Developer",
+    bio: "Machine Learning and backend developer working on AI models, automation pipelines, and server-side engineering.",
+    image: "/assets/TeamMembers/shivansh.png",
   },
   {
-    name: "Alex Johnson",
-    role: "CEO & Founder",
-    bio: "Environmental engineer with 10+ years of experience in sustainability. Passionate about leveraging technology to solve climate challenges and create a greener future for all.",
-    image: "/assets/TeamMembers/ecoVisionLogo.png",
+    name: "Ansh Mishra",
+    role: "Figma & Frontend",
+    bio: "UI/UX designer and frontend developer skilled in Figma, prototyping, and building pixel-perfect interfaces using modern design principles.",
+    image: "/assets/TeamMembers/ansh.png",
   },
   {
-    name: "Alex Johnson",
-    role: "CEO & Founder",
-    bio: "Environmental engineer with 10+ years of experience in sustainability. Passionate about leveraging technology to solve climate challenges and create a greener future for all.",
-    image: "/assets/TeamMembers/ecoVisionLogo.png",
+    name: "Manish Aggarwal",
+    role: "Frontend",
+    bio: "Frontend engineer who loves crafting smooth user experiences. Skilled in React, UI design systems, and responsive layouts.",
+    image: "/assets/TeamMembers/manish.png",
   },
 ];
 
@@ -86,7 +87,7 @@ const About = () => {
             </p>
           </div>
           <div className={styles.card}>
-              <img src="/assets/values/ecoVisionLogo.png" />
+            <img src="/assets/values/ecoVisionLogo.png" />
             <h3>Community</h3>
             <p>
               We believe in the power of collective action and building
@@ -95,7 +96,7 @@ const About = () => {
           </div>
 
           <div className={styles.card}>
-              <img src="/assets/values/ecoVisionLogo.png" />
+            <img src="/assets/values/ecoVisionLogo.png" />
             <h3>Innovation</h3>
             <p>
               We continuously push the boundaries of technology to create better
