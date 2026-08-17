@@ -9,7 +9,7 @@ import heroBg3 from "../assets/hero-bg-3.jpg";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
-// ⭐ TABLE VERSION POPUP WITH CONFIDENCE COLORS
+// ⭐ RESPONSIVE POPUP: image + mobile-friendly results list
 const ImagePopup = ({ imageBase64, itemData, onClose }) => {
   if (!imageBase64) return null;
 
@@ -25,79 +25,117 @@ const ImagePopup = ({ imageBase64, itemData, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white/95 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 border border-gray-200 animate-scaleIn"
+        className="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-4 sm:p-6 border border-gray-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Annotated Image */}
-        <div className="rounded-xl overflow-hidden shadow-lg border border-gray-200 mb-6">
-          <img
-            src={`data:image/jpeg;base64,${imageBase64}`}
-            alt="Annotated"
-            className="w-full h-auto"
-          />
+        {/* Header with close */}
+        <div className="flex items-start justify-between mb-3">
+          <h2 className="text-xl sm:text-2xl font-bold text-green-700">Detected Items</h2>
+          <button
+            aria-label="Close"
+            className="ml-3 inline-flex items-center justify-center w-9 h-9 rounded-md text-gray-700 hover:bg-gray-100"
+            onClick={onClose}
+          >
+            ✕
+          </button>
         </div>
 
-        {/* Table */}
-        <h2 className="text-2xl font-bold text-green-700 mb-4">
-          Detected Items
-        </h2>
+        {/* Responsive layout: image left on md+, stacked on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Image */}
+          <div className="rounded-md bg-gray-50 flex items-center justify-center overflow-hidden border border-gray-200 p-2">
+            <img
+              src={`data:image/jpeg;base64,${imageBase64}`}
+              alt="Annotated"
+              className="w-full h-auto object-contain max-h-[60vh]"
+            />
+          </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr className="bg-gray-100 text-gray-700">
-                <th className="p-3 border-b">Name</th>
-                <th className="p-3 border-b">Carbon Footprint</th>
-                <th className="p-3 border-b">Confidence</th>
-                <th className="p-3 border-b">Shelf Life</th>
-                <th className="p-3 border-b">Recycle Tips</th>
-              </tr>
-            </thead>
+          {/* Results */}
+          <div className="space-y-3">
+            {/* For larger screens show a compact table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="bg-gray-100 text-gray-700">
+                    <th className="p-2 border-b text-left">Name</th>
+                    <th className="p-2 border-b">Carbon</th>
+                    <th className="p-2 border-b">Confidence</th>
+                    <th className="p-2 border-b">Shelf</th>
+                    <th className="p-2 border-b">Tips</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {itemData?.length === 0 ? (
+                    <tr>
+                      <td colSpan="5" className="p-4 text-center text-red-600 font-semibold">
+                        No items detected
+                      </td>
+                    </tr>
+                  ) : (
+                    itemData?.map((item, idx) => (
+                      <tr key={idx} className="border-b hover:bg-gray-50 align-top">
+                        <td className="p-2 font-medium capitalize">{item.name}</td>
+                        <td className="p-2">{item.carbon_Footprint}</td>
+                        <td className={`p-2 ${getConfidenceColor(item.confidence.percent)}`}>
+                          {item.confidence.percent.toFixed(1)}%
+                        </td>
+                        <td className="p-2">{item.shelf_Life}</td>
+                        <td className="p-2 max-w-[200px] whitespace-normal">{item.recycle_Tips}</td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-            <tbody>
+            {/* Mobile-friendly cards */}
+            <div className="md:hidden grid grid-cols-1 gap-3">
               {itemData?.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan="5"
-                    className="p-5 text-center text-red-600 font-semibold text-lg"
-                  >
-                    No items detected
-                  </td>
-                </tr>
+                <div className="p-4 rounded-md border border-gray-200 text-center text-red-600 font-semibold">No items detected</div>
               ) : (
                 itemData?.map((item, idx) => (
-                  <tr key={idx} className="border-b hover:bg-gray-50">
-                    <td className="p-3 font-medium capitalize">{item.name}</td>
+                  <div key={idx} className="p-3 rounded-lg border border-gray-200 bg-white shadow-sm">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="text-md font-semibold capitalize">{item.name}</div>
+                      <div className={`text-sm ${getConfidenceColor(item.confidence.percent)}`}>{item.confidence.percent.toFixed(1)}%</div>
+                    </div>
 
-                    <td className="p-3">{item.carbon_Footprint}</td>
+                    <div className="text-sm text-gray-600 mb-2">
+                      <div><span className="font-medium">Carbon:</span> {item.carbon_Footprint}</div>
+                      <div><span className="font-medium">Shelf life:</span> {item.shelf_Life}</div>
+                    </div>
 
-                    <td
-                      className={`p-3 ${getConfidenceColor(
-                        item.confidence.percent
-                      )}`}
-                    >
-                      {item.confidence.percent.toFixed(1)}%
-                    </td>
-
-                    <td className="p-3">{item.shelf_Life}</td>
-
-                    <td className="p-3 max-w-[240px] whitespace-normal">
-                      {item.recycle_Tips}
-                    </td>
-                  </tr>
+                    <div className="text-sm text-gray-700"><span className="font-medium">Recycle tips:</span> {item.recycle_Tips}</div>
+                  </div>
                 ))
               )}
-            </tbody>
-          </table>
-        </div>
+            </div>
 
-        {/* Close Button */}
-        <button
-          className="mt-6 w-full px-4 py-3 rounded-xl bg-red-500 text-white text-lg font-semibold shadow-md hover:bg-red-600 transition-all"
-          onClick={onClose}
-        >
-          Close
-        </button>
+            {/* Action buttons (full width on mobile) */}
+            <div className="mt-2 flex flex-col sm:flex-row gap-3">
+              <button
+                className="w-full sm:w-auto px-4 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+                onClick={() => {
+                  // allow user to download the annotated image
+                  const a = document.createElement('a');
+                  a.href = `data:image/jpeg;base64,${imageBase64}`;
+                  a.download = 'annotated.jpg';
+                  a.click();
+                }}
+              >
+                Download Image
+              </button>
+
+              <button
+                className="w-full sm:w-auto px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition"
+                onClick={onClose}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -230,12 +268,12 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <h1 className="text-5xl sm:text-6xl font-extrabold text-white drop-shadow-lg">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg">
           Transform Your
           <span className="block text-green-200">Recycling Journey</span>
         </h1>
 
-        <p className="text-lg sm:text-xl text-white/90 mt-6 mb-10">
+        <p className="text-base sm:text-lg text-white/90 mt-6 mb-10">
           AI-powered detection to identify recyclable items, calculate carbon
           footprint, and provide personalized recycling tips.
         </p>
@@ -283,7 +321,7 @@ const HeroSection = () => {
               ref={videoRef}
               autoPlay
               playsInline
-              className="w-[360px] rounded-xl shadow-md"
+                          className="w-full max-w-[360px] rounded-xl shadow-md"
             ></video>
 
             <div className="flex justify-center gap-5 mt-5">

@@ -127,10 +127,10 @@ const Nearby = () => {
   }, []);
 
   return (
-    <div className="flex h-screen w-full pt-16">
+    <div className="flex flex-col sm:flex-row h-screen w-full pt-16">
 
-      {/* left sidebar showing the list of centers */}
-      <div className="w-[350px] bg-white shadow-xl overflow-y-auto p-5 border-r">
+      {/* left sidebar showing the list of centers (stacks on mobile) */}
+      <div className="w-full sm:w-[350px] bg-white shadow-xl overflow-y-auto p-5 border-r">
         <div className="pb-4 pt-6 px-2 border-b mb-4">
           <h2 className="text-2xl font-bold text-green-700">
             Nearby Recycling Centers
