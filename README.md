@@ -1,5 +1,5 @@
 🌿 Eco Vision: AI-Powered Sustainability Platform 
-
+LIVE-DEMO: https://eco-vision-rho.vercel.app/
 ~ Helping people identify recyclable items, reduce waste, and make eco-friendly decisions effortlessly.
 
 ## Overview
