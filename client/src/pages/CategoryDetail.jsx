@@ -185,7 +185,7 @@ const CategoryDetail = () => {
               <img
                 src={category.image}
                 alt={category.name}
-                className="w-full h-96 object-cover rounded-xl shadow-medium"
+                className="w-full h-60 sm:h-96 object-cover rounded-xl shadow-medium"
               />
             </div>
           </div>

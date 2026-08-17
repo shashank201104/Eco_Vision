@@ -1,54 +1,76 @@
- /* Author - Manish Aggarwal */
+/* Author - Manish Aggarwal */
 
+/* Mobile-first: cards stack vertically and fit narrow screens. On sm+ screens they become row cards. */
 .card {
-  padding: 2rem;
+  padding: 1rem;
   border-color: hsl(var(--border));
-  min-width: 25rem;
+  width: 100%;
   max-width: 25rem;
   background-color: white;
   border-radius: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column; /* stack on small screens */
+  align-items: center;
 
   position: relative;
   bottom: 0;
   box-shadow: 0 0 0 transparent;
-  gap: 15px;
-  transition: bottom 0.3s ease, box-shadow 0.3s ease;
+  gap: 12px;
+  transition: bottom 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease;
 }
 
 .card:hover {
   position: relative;
-  bottom: 10px;
-  box-shadow: 0 5px 15px -5px hsl(var(--primary));
+  bottom: 8px;
+  box-shadow: 0 6px 18px -6px hsl(var(--primary));
+  transform: translateY(-6px);
 }
 
-.card {
+/* On small and up screens keep row layout */
+@media (min-width: 640px) {
+  .card {
+    flex-direction: row;
+    padding: 1.25rem;
+    align-items: center;
+  }
 }
 
 .avatar {
   border-radius: 9999px;
-  width: 5rem;
-  height: 5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+@media (min-width: 640px) {
+  .avatar {
+    width: 5rem;
+    height: 5rem;
+  }
 }
 
 .name {
   font-weight: 700;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+  font-size: 1.1rem;
+  line-height: 1.4rem;
   margin-bottom: 0.25rem;
 }
 
 .role {
   color: hsl(var(--primary));
   font-weight: 500;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .bio {
   color: var(--muted-foreground);
-  line-height: 1.625;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .bio {
+    text-align: left;
+  }
 }
